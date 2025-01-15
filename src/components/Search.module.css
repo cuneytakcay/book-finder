@@ -1,0 +1,15 @@
+.form {
+    display: flex;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto 50px;
+}
+
+.input {
+    flex: 2;
+}
+
+.button {
+    flex: 1;
+    max-width: 200px;
+}

@@ -1,0 +1,38 @@
+.bookList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 20px 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background: #fafafa;
+}
+
+.card img {
+    width: 60px;
+    height: 90px;
+    margin-right: 15px;
+}
+
+.info {
+    flex-grow: 1;
+}
+
+.info h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.info p {
+    margin: 5px 0;
+    color: #666;
+}

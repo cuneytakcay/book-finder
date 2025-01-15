@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import BookList from './BookList';
+import styles from './Search.module.css';
 
 interface Book {
     id: string;
@@ -23,7 +24,7 @@ const Search: React.FC = () => {
             query = 'popular'; // Use a default query for popular books
         }
         try {
-            const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+            const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&maxResults=100`);
             setBooks(response.data.items);
         } catch (error) {
             console.error('Error fetching data from Google Books API:', error);
@@ -37,18 +38,17 @@ const Search: React.FC = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search for books..."
+                    className={styles.input}
                 />
-                <button type="submit">Search</button>
+                <button className={styles.button} type="submit">Search</button>
             </form>
-            <div>
-                {books && <BookList books={books} />}
-            </div>
+            {books && <BookList books={books} />}
         </div>
     );
 };
