@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { Book } from "./BookList";
-import BookList from "./BookList";
-import styles from "./Search.module.css";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Book } from './BookList';
+import BookList from './BookList';
+import styles from './Search.module.css';
 
 const Search: React.FC = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
@@ -15,9 +15,9 @@ const Search: React.FC = () => {
     return () => clearTimeout(debounceTimeout);
   }, [query]);
 
-  const handleSearch = async (query: string = "") => {
+  const handleSearch = async (query: string = '') => {
     if (!query) {
-      query = "cooking";
+      query = 'cooking';
     }
 
     try {
@@ -26,7 +26,7 @@ const Search: React.FC = () => {
       );
       setBooks(response.data.items);
     } catch (error) {
-      console.error("Error fetching data from Google Books API:", error);
+      console.error('Error fetching data from Google Books API:', error);
     }
   };
 
@@ -39,13 +39,13 @@ const Search: React.FC = () => {
     <div>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
-          type="text"
+          type='text'
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for books..."
+          placeholder='Search for books...'
           className={styles.input}
         />
-        <button className={styles.button} type="submit">
+        <button className={styles.button} type='submit'>
           Search
         </button>
       </form>

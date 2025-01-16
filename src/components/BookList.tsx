@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import styles from "./BookList.module.css";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import styles from './BookList.module.css';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export interface Book {
   id: string;
@@ -43,8 +43,11 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
         books &&
         books.map((book) => (
           <div key={book.id} className={styles.card}>
-            <img 
-              src={book.volumeInfo.imageLinks?.thumbnail || "https://placehold.co/400x600/e2e8f0/1e293b?text=No+Cover+Available"}
+            <img
+              src={
+                book.volumeInfo.imageLinks?.thumbnail ||
+                'https://placehold.co/400x600/e2e8f0/1e293b?text=No+Cover+Available'
+              }
               alt={
                 book.volumeInfo.imageLinks?.thumbnail
                   ? `Cover of ${book.volumeInfo.title}`
@@ -54,13 +57,13 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
             <div className={styles.info}>
               <h3>{book.volumeInfo.title}</h3>
               <p className={styles.author}>
-                By{" "}
+                By{' '}
                 {book.volumeInfo.authors
-                  ? book.volumeInfo.authors.join(", ")
-                  : "Unknown Author"}
+                  ? book.volumeInfo.authors.join(', ')
+                  : 'Unknown Author'}
               </p>
               <p className={styles.description}>
-                {book.searchInfo?.textSnippet || "No description available."}
+                {book.searchInfo?.textSnippet || 'No description available.'}
               </p>
               <Link className={styles.readMore} to={`/book/${book.id}`}>
                 Read More <FontAwesomeIcon icon={faArrowRight} />

@@ -1,20 +1,23 @@
-import Search from "./components/Search";
-import BookDetail from "./components/BookDetail";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./styles.css";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Search from './components/Search';
+import BookDetail from './components/BookDetail';
+import './styles.css';
 
 function App() {
   return (
     <Router>
-      <header className="header">
+      <header className='header'>
         <h1>Book Finder</h1>
       </header>
-      <div className="container">
+      <main className='container'>
         <Routes>
-          <Route path="/" element={<Search />} />
-          <Route path="/book/:id" element={<BookDetail />} />
+          <Route path='/' element={<Search />} />
+          <Route path='/book/:id' element={<BookDetail />} />
         </Routes>
-      </div>
+      </main>
+      <footer className='footer'>
+        <p>Book Finder © 2024</p>
+      </footer>
     </Router>
   );
 }
