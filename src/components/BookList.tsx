@@ -3,20 +3,7 @@ import styles from './BookList.module.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-
-export interface Book {
-  id: string;
-  volumeInfo: {
-    title: string;
-    authors?: string[];
-    imageLinks?: {
-      thumbnail?: string;
-    };
-  };
-  searchInfo: {
-    textSnippet?: string;
-  };
-}
+import { Book } from '../types/Book';
 
 interface BookListProps {
   books: Book[];

@@ -3,18 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styles from './BookDetail.module.css';
-
-interface Book {
-  id: string;
-  volumeInfo: {
-    title: string;
-    authors: string[];
-    description: string;
-    imageLinks: {
-      thumbnail: string;
-    };
-  };
-}
+import { Book } from '../types/Book';
 
 const BookDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

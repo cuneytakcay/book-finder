@@ -16,7 +16,7 @@ function App() {
         </Routes>
       </main>
       <footer className='footer'>
-        <p>Book Finder © 2024</p>
+        <p style={{ textAlign: 'center' }}>Book Finder © 2024</p>
       </footer>
     </Router>
   );
