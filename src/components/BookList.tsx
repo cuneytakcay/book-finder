@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import styles from "./BookList.module.css";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,9 +23,24 @@ interface BookListProps {
 }
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (books) {
+        setLoading(false);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [books]);
+
   return (
     <div className={styles.bookList}>
-      {books &&
+      {loading ? (
+        <div className={styles.skeletonLoader}></div>
+      ) : (
+        books &&
         books.map((book) => (
           <div key={book.id} className={styles.card}>
             <img 
@@ -51,7 +67,8 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
               </Link>
             </div>
           </div>
-        ))}
+        ))
+      )}
     </div>
   );
 };

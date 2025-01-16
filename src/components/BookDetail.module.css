@@ -1,0 +1,22 @@
+.bookDetail {
+  padding: 20px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bookDetail h1 {
+  font-size: 44px;
+  margin-bottom: 10px;
+}
+
+.bookDetail img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.bookDetail p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
