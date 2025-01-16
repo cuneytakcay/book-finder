@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Book } from '../types/Book';
 import BookList from './BookList';
+import Loader from './Loader';
 import styles from './Search.module.css';
 
 const Search: React.FC = () => {
@@ -10,7 +11,7 @@ const Search: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // handleSearch('arts');
+    handleSearch('arts');
   }, []);
 
   const handleSearch = async (query: string) => {
@@ -31,6 +32,7 @@ const Search: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     handleSearch(query);
   };
 
@@ -53,7 +55,7 @@ const Search: React.FC = () => {
         </button>
       </form>
       {loading ? (
-        <p style={{ textAlign: 'center' }}>Loading...</p>
+        <Loader />
       ) : books ? (
         <BookList books={books} />
       ) : (
