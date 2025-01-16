@@ -12,3 +12,7 @@ export interface Book {
     textSnippet?: string;
   };
 }
+
+export interface BookListProps {
+  books: Book[];
+}

@@ -7,9 +7,10 @@ import styles from './Search.module.css';
 const Search: React.FC = () => {
   const [query, setQuery] = useState('');
   const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    handleSearch('arts');
+    // handleSearch('arts');
   }, []);
 
   const handleSearch = async (query: string) => {
@@ -19,7 +20,11 @@ const Search: React.FC = () => {
       );
 
       setBooks(response.data.items);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     } catch (error) {
+      setLoading(false);
       console.error('Error fetching data from Google Books API:', error);
     }
   };
@@ -43,11 +48,13 @@ const Search: React.FC = () => {
           placeholder='Search for books...'
           className={styles.input}
         />
-        <button className={styles.button} type='submit'>
+        <button className={styles.button} type='submit' disabled={!query}>
           Search
         </button>
       </form>
-      {books ? (
+      {loading ? (
+        <p style={{ textAlign: 'center' }}>Loading...</p>
+      ) : books ? (
         <BookList books={books} />
       ) : (
         <p style={{ textAlign: 'center' }}>
