@@ -1,15 +1,19 @@
 .form {
-    display: flex;
-    width: 100%;
-    max-width: 700px;
-    margin: 0 auto 50px;
+  display: flex;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 50px;
 }
 
 .input {
-    flex: 2;
+  flex: 2;
+  border-right: none !important;
+  border-radius: 4px 0 0 4px !important;
 }
 
 .button {
-    flex: 1;
-    max-width: 200px;
+  flex: 1;
+  max-width: 200px;
+  border-radius: 0 4px 4px 0 !important;
+  border-left: none !important;
 }
