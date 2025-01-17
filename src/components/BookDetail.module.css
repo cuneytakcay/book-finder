@@ -1,22 +1,53 @@
 .bookDetail {
-  padding: 20px;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+}
+
+button {
+  margin-bottom: 40px;
 }
 
 .bookDetail h1 {
-  font-size: 44px;
+  font-size: 2em;
   margin-bottom: 10px;
+}
+
+.bookDetail h2 {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.authors {
+  font-size: 1.125em;
+  text-align: center;
+}
+
+.content {
+  margin-top: 40px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
 }
 
 .bookDetail img {
   max-width: 100%;
   height: auto;
-  margin-bottom: 10px;
 }
 
-.bookDetail p {
-  font-size: 16px;
-  margin-bottom: 10px;
+a {
+  font-size: 1.125em;
+  font-weight: 700;
+  text-decoration: none;
+  color: #403c63;
+  cursor: pointer;
+  margin-top: 20px;
+  display: inline-block;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+svg {
+  margin-left: 10px;
 }
