@@ -21,12 +21,13 @@ const Search: React.FC = () => {
       );
 
       setBooks(response.data.items);
+      // Set timeout for loading effect after fetching data
       setTimeout(() => {
         setLoading(false);
       }, 1000);
     } catch (error) {
-      setLoading(false);
       console.error('Error fetching data from Google Books API:', error);
+      setLoading(false); // Ensure loading is set to false on error
     }
   };
 

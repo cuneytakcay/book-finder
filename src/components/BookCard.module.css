@@ -1,0 +1,45 @@
+.card {
+  display: flex;
+  padding: 20px;
+  border-radius: 4px;
+  background: #ededf1;
+  width: 100%;
+}
+
+.card img {
+  width: 128px;
+  height: 100%;
+  margin-right: 20px;
+}
+
+.info {
+  flex-grow: 1;
+}
+
+.info h3 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.author {
+  font-size: 0.85em;
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 5px;
+}
+
+.description {
+  margin-top: 20px;
+}
+
+.readMore {
+  display: block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #201e31;
+  font-weight: 700;
+}
+
+.readMore:hover {
+  text-decoration: underline;
+}
