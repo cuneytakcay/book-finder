@@ -46,38 +46,45 @@ const BookDetail: React.FC = () => {
         <div className={styles.bookDetail}>
           <button onClick={handleClick}>Go to Book Search</button>
           <h1>{book.volumeInfo.title}</h1>
-          <h2>{book.volumeInfo.subtitle}</h2>
-          <p className={styles.authors}>
-            <span style={{ fontWeight: 'bold' }}>Authors:</span>{' '}
-            {book.volumeInfo.authors?.join(', ')}
-          </p>
+          {book.volumeInfo.subtitle && <h2>{book.volumeInfo.subtitle}</h2>}
+          {book.volumeInfo.authors && (
+            <p className={styles.authors}>
+              <span style={{ fontWeight: 'bold' }}>Authors:</span>{' '}
+              {book.volumeInfo.authors?.join(', ')}
+            </p>
+          )}
           <div className={styles.content}>
-            <img
-              src={
-                book.volumeInfo.imageLinks?.thumbnail ||
-                'https://placehold.co/128x193/e2e8f0/1e293b?text=No+Cover+Available'
-              }
-              alt={
-                book.volumeInfo.imageLinks?.thumbnail
-                  ? `Cover of ${book.volumeInfo.title}`
-                  : 'No cover available'
-              }
-              width={128}
-              height={193}
-            />
+            <div className={styles.imagebox}>
+              <img
+                src={
+                  book.volumeInfo.imageLinks?.thumbnail ||
+                  'https://placehold.co/128x193/e2e8f0/1e293b?text=No+Cover+Available'
+                }
+                alt={
+                  book.volumeInfo.imageLinks?.thumbnail
+                    ? `Cover of ${book.volumeInfo.title}`
+                    : 'No cover available'
+                }
+                width={128}
+                height={193}
+              />
+            </div>
             <div className={styles.info}>
               <div
                 dangerouslySetInnerHTML={{
                   __html:
-                    book.volumeInfo.description || 'No description available',
+                    book.volumeInfo.description ||
+                    '<p>No description available</p>',
                 }}
               />
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Categories:</span>{' '}
-                {book.volumeInfo.categories?.join(', ')}
-              </p>
+              {book.volumeInfo.categories && (
+                <p>
+                  <span style={{ fontWeight: 'bold' }}>Categories:</span>{' '}
+                  {book.volumeInfo.categories?.join(', ')}
+                </p>
+              )}
               <a
-                href={book.volumeInfo.infoLink}
+                href={`https://books.google.com/books?id=${id}`}
                 target='_blank'
                 rel='noopener noreferrer'
               >

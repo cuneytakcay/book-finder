@@ -7,19 +7,21 @@ import styles from './BookCard.module.css';
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   return (
     <div className={styles.card}>
-      <img
-        src={
-          book.volumeInfo.imageLinks?.thumbnail ||
-          'https://placehold.co/128x193/e2e8f0/1e293b?text=No+Cover+Available'
-        }
-        alt={
-          book.volumeInfo.imageLinks?.thumbnail
-            ? `Cover of ${book.volumeInfo.title}`
-            : 'No cover available'
-        }
-        width={128}
-        height={193}
-      />
+      <div className={styles.imagebox}>
+        <img
+          src={
+            book.volumeInfo.imageLinks?.thumbnail ||
+            'https://placehold.co/128x193/e2e8f0/1e293b?text=No+Cover+Available'
+          }
+          alt={
+            book.volumeInfo.imageLinks?.thumbnail
+              ? `Cover of ${book.volumeInfo.title}`
+              : 'No cover available'
+          }
+          width={128}
+          height={193}
+        />
+      </div>
       <div className={styles.info}>
         <h3>{book.volumeInfo.title}</h3>
         <p className={styles.author}>

@@ -35,9 +35,10 @@ p {
 .container {
   width: 100%;
   max-width: 1024px;
+  min-height: 100vh;
   margin: 50px auto;
   background: #fcfcfc;
-  padding: 50px 20px 100px;
+  padding: 50px 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 4px;
 }

@@ -3,12 +3,15 @@ import axios from 'axios';
 import { Book } from '../types/Book';
 import BookList from './BookList';
 import Loader from './Loader';
+import Pagination from './Pagination';
 import styles from './Search.module.css';
 
 const Search: React.FC = () => {
   const [query, setQuery] = useState('');
-  const [books, setBooks] = useState<Book[]>([]);
+  const [searchResults, setSearchResults] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     handleSearch('arts');
@@ -17,14 +20,14 @@ const Search: React.FC = () => {
   const handleSearch = async (query: string) => {
     try {
       const response = await axios.get(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=10&langRestrict=en`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=40&langRestrict=en`
       );
 
-      setBooks(response.data.items);
+      setSearchResults(response.data.items);
       // Set timeout for loading effect after fetching data
       setTimeout(() => {
         setLoading(false);
-      }, 1000);
+      }, 500);
     } catch (error) {
       console.error('Error fetching data from Google Books API:', error);
       setLoading(false); // Ensure loading is set to false on error
@@ -39,6 +42,32 @@ const Search: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = searchResults.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setLoading(true);
+      setCurrentPage(currentPage + 1);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setLoading(true);
+      setCurrentPage(currentPage - 1);
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    }
   };
 
   return (
@@ -57,8 +86,22 @@ const Search: React.FC = () => {
       </form>
       {loading ? (
         <Loader />
-      ) : books ? (
-        <BookList books={books} />
+      ) : searchResults ? (
+        <div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onNext={handleNextPage}
+            onPrevious={handlePreviousPage}
+          />
+          <BookList books={currentItems} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onNext={handleNextPage}
+            onPrevious={handlePreviousPage}
+          />
+        </div>
       ) : (
         <p style={{ textAlign: 'center' }}>
           No books found. Please try searching for a different keyword.
