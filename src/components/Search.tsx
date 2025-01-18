@@ -9,7 +9,7 @@ import styles from './Search.module.css';
 const Search: React.FC = () => {
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Book[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [errorMessage, setErrorMessage] = useState(
     'No books found. Please try searching for a different keyword.'
@@ -17,7 +17,7 @@ const Search: React.FC = () => {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    handleSearch('arts');
+    // handleSearch('arts');
   }, []);
 
   const handleSearch = async (query: string) => {
