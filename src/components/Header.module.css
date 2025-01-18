@@ -1,0 +1,29 @@
+.header {
+  text-align: center;
+  padding: 30px 0;
+  background-color: #403c63;
+}
+
+.header h1 {
+  color: #fcfcfc;
+  margin-bottom: 0;
+}
+
+.nav-link {
+  background-color: #403c63;
+  color: #fcfcfc;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0 5px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #fcfcfc;
+  color: #403c63;
+  transform: scale(1.05);
+  border: none !important;
+}
