@@ -11,6 +11,9 @@ const Search: React.FC = () => {
   const [searchResults, setSearchResults] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [errorMessage, setErrorMessage] = useState(
+    'No books found. Please try searching for a different keyword.'
+  );
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -29,7 +32,14 @@ const Search: React.FC = () => {
         setLoading(false);
       }, 500);
     } catch (error) {
-      console.error('Error fetching data from Google Books API:', error);
+      if (
+        error instanceof Error &&
+        error.message === 'Request failed with status code 429'
+      ) {
+        setErrorMessage('API rate limit exceeded. Please try again later.');
+      } else {
+        setErrorMessage('An unknown error occurred. Please try again later.');
+      }
       setLoading(false); // Ensure loading is set to false on error
     }
   };
@@ -86,7 +96,7 @@ const Search: React.FC = () => {
       </form>
       {loading ? (
         <Loader />
-      ) : searchResults ? (
+      ) : searchResults.length > 0 ? (
         <div>
           <Pagination
             currentPage={currentPage}
@@ -103,9 +113,7 @@ const Search: React.FC = () => {
           />
         </div>
       ) : (
-        <p style={{ textAlign: 'center' }}>
-          No books found. Please try searching for a different keyword.
-        </p>
+        <p className='error'>{errorMessage}</p>
       )}
     </div>
   );
