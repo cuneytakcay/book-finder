@@ -15,11 +15,14 @@
 }
 
 .form input {
-  padding: 0.5rem;
+  padding: 0.5rem !important;
   border: 1px solid #47436d;
   border-radius: 4px;
   display: block;
   width: 100%;
+  height: auto !important;
+  border-width: 1px !important;
+  font-size: 1rem !important;
 }
 
 .form button {
@@ -31,4 +34,16 @@
   margin: 0 auto;
   width: 100%;
   max-width: 400px;
+}
+
+.forgotPassword {
+  background-color: transparent !important;
+  border: none;
+  color: #47436d !important;
+  text-align: center;
+}
+
+.forgotPassword:hover {
+  border: none !important;
+  text-decoration: underline;
 }
