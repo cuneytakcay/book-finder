@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import BookSearch from './features/books/BookSearch';
-import BookDetail from './components/BookDetail';
+import BookDetail from './features/bookDetail/BookDetail';
 import Footer from './components/Footer';
 import ModalContainer from './components/ModalContainer';
 import Login from './components/Login';

@@ -1,38 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Spinner from './Spinner';
-import { Book } from '../types/Book';
+import Spinner from '../../components/Spinner';
 import styles from './BookDetail.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {
+  fetchBookById,
+  selectBook,
+  selectBookLoading,
+  selectBookError,
+} from './bookDetailSlice';
+
 const BookDetail: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const book = useAppSelector(selectBook);
+  const loading = useAppSelector(selectBookLoading);
+  const error = useAppSelector(selectBookError);
+
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [book, setBook] = useState<Book | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBookDetails = async () => {
-      try {
-        const response = await axios.get(
-          `https://www.googleapis.com/books/v1/volumes/${id}`
-        );
-        setBook(response.data);
-
-        // Set timeout for loading effect after fetching data
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      } catch (error) {
-        console.error('Error fetching book details:', error);
-        setLoading(false); // Ensure loading is set to false on error
-      }
-    };
-
-    fetchBookDetails();
-  }, [id]);
+    if (id) {
+      dispatch(fetchBookById(id));
+    }
+  }, [dispatch, id]);
 
   const handleClick = () => {
     navigate('/');
@@ -41,7 +35,7 @@ const BookDetail: React.FC = () => {
   return (
     <div>
       {loading ? (
-        <Spinner />
+        <Spinner spinnerText='Loading selected book...' />
       ) : book ? (
         <div className={styles.bookDetail}>
           <button onClick={handleClick}>Go to Book Search</button>
@@ -78,7 +72,7 @@ const BookDetail: React.FC = () => {
                 }}
               />
               {book.volumeInfo.categories && (
-                <p>
+                <p className={styles.categories}>
                   <span style={{ fontWeight: 'bold' }}>Categories:</span>{' '}
                   {book.volumeInfo.categories?.join(', ')}
                 </p>
@@ -95,7 +89,7 @@ const BookDetail: React.FC = () => {
           </div>
         </div>
       ) : (
-        <p style={{ textAlign: 'center' }}>This book cannot be found.</p>
+        <p className={styles.error}>{error}</p>
       )}
     </div>
   );
