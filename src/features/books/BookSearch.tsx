@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import BookList from './BookList';
-import Loader from '../../components/Loader';
+import Spinner from '../../components/Spinner';
 import styles from './BookSearch.module.css';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -15,7 +15,7 @@ const BookSearch: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchBooks('culinary'));
-  }, []);
+  }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,7 +41,7 @@ const BookSearch: React.FC = () => {
         </button>
       </form>
       {loading ? (
-        <Loader />
+        <Spinner spinnerText={`Loading ${query} books...`} />
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : (

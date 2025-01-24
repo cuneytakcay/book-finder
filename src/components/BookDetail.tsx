@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Loader from './Loader';
+import Spinner from './Spinner';
 import { Book } from '../types/Book';
 import styles from './BookDetail.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,7 +41,7 @@ const BookDetail: React.FC = () => {
   return (
     <div>
       {loading ? (
-        <Loader />
+        <Spinner />
       ) : book ? (
         <div className={styles.bookDetail}>
           <button onClick={handleClick}>Go to Book Search</button>
