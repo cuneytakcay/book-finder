@@ -1,39 +1,26 @@
-import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import BookSearch from './features/books/BookSearch';
 import BookDetail from './features/bookDetail/BookDetail';
 import Footer from './components/Footer';
-import ModalContainer from './components/ModalContainer';
-import Login from './components/Login';
-import Register from './components/Register';
+import ModalContainer from './features/modal/ModalContainer';
+import ModalLoginForm from './features/modal/ModalLoginForm';
+import ModalRegisterForm from './features/modal/ModalRegisterForm';
 import './styles.css';
 
+import { useAppSelector } from './app/hooks';
+import {
+  selectModalState,
+  selectModalFormType,
+} from './features/modal/modalSlice';
+
 function App() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(false);
-
-  const handleModalStatus = () => setModalOpen(!isModalOpen);
-
-  const handleLoginStatus = () => {
-    setIsLogin(true);
-    setIsRegister(false);
-    setModalOpen(true);
-  };
-
-  const handleRegisterStatus = () => {
-    setIsRegister(true);
-    setIsLogin(false);
-    setModalOpen(true);
-  };
+  const isModalOpen = useAppSelector(selectModalState);
+  const modalFormType = useAppSelector(selectModalFormType);
 
   return (
     <>
-      <Header
-        onLoginClick={handleLoginStatus}
-        onRegisterClick={handleRegisterStatus}
-      />
+      <Header />
       <main className='container'>
         <Routes>
           <Route path='/' element={<BookSearch />} />
@@ -43,11 +30,10 @@ function App() {
       <Footer />
       {isModalOpen && (
         <ModalContainer
-          title={isLogin ? 'Login' : 'Register'}
-          onClick={handleModalStatus}
+          title={modalFormType === 'login' ? 'Login' : 'Register'}
         >
-          {isLogin && <Login />}
-          {isRegister && <Register />}
+          {modalFormType === 'login' && <ModalLoginForm />}
+          {modalFormType === 'register' && <ModalRegisterForm />}
         </ModalContainer>
       )}
     </>
