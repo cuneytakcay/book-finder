@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Search from './components/Search';
+import BookSearch from './features/books/BookSearch';
 import BookDetail from './components/BookDetail';
 import Footer from './components/Footer';
 import ModalContainer from './components/ModalContainer';
@@ -29,14 +29,14 @@ function App() {
   };
 
   return (
-    <Router>
+    <>
       <Header
         onLoginClick={handleLoginStatus}
         onRegisterClick={handleRegisterStatus}
       />
       <main className='container'>
         <Routes>
-          <Route path='/' element={<Search />} />
+          <Route path='/' element={<BookSearch />} />
           <Route path='/book/:id' element={<BookDetail />} />
         </Routes>
       </main>
@@ -50,7 +50,7 @@ function App() {
           {isRegister && <Register />}
         </ModalContainer>
       )}
-    </Router>
+    </>
   );
 }
 
