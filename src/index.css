@@ -11,3 +11,9 @@ body,
   flex-direction: column;
   min-height: 100vh;
 }
+
+body {
+  background-image: url('./assets/body-background.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
