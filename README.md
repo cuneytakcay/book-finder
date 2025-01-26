@@ -11,6 +11,10 @@ Book Finder is a web application that allows users to search for books using the
 - Pagination support to navigate through multiple pages of results.
 - Loading spinner to indicate when data is being fetched.
 
+## Upcoming Features
+
+- **Login and Register Functionality**: In progress. Users will be able to create their own accounts, allowing them to manage personal book lists with options to categorize books as 'to read' or 'read', add their own notes, and more.
+
 ## Technologies Used
 
 - **React**: A JavaScript library for building user interfaces.
