@@ -7,7 +7,7 @@ Book Finder is a web application that allows users to search for books using the
 ## Features
 
 - Search for books by title, author, or keywords.
-- View a list of books with details such as title, author, and publication date.
+- View a list of books with details such as title, author, and a short description.
 - Pagination support to navigate through multiple pages of results.
 - Loading spinner to indicate when data is being fetched.
 
