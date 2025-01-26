@@ -1,30 +1,63 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import BookList from './BookList';
+import Pagination from '../pagination/Pagination';
 import Spinner from '../../components/Spinner';
 import styles from './BookSearch.module.css';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { fetchBooks, selectBooksLoading, selectBooksError } from './booksSlice';
+import {
+  fetchBooks,
+  selectTotalItems,
+  selectBooksLoading,
+  selectBooksError,
+} from './booksSlice';
 
 const BookSearch: React.FC = () => {
   const dispatch = useAppDispatch();
+  const totalItems = useAppSelector(selectTotalItems);
   const loading = useAppSelector(selectBooksLoading);
   const error = useAppSelector(selectBooksError);
 
   const [query, setQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isInitialRender, setIsInitialRender] = useState(true);
 
-  useEffect(() => {
-    dispatch(fetchBooks('culinary'));
-  }, [dispatch]);
+  const pageCount = Math.ceil(totalItems / 10); // Assuming 10 books per page
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(fetchBooks(query));
+    setCurrentPage(1);
+    dispatch(fetchBooks({ query, startIndex: 0 }));
+    setIsInitialRender(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
+
+  const renderNextPage = () => {
+    if (currentPage < pageCount) {
+      setCurrentPage(currentPage + 1);
+      dispatch(fetchBooks({ query, startIndex: currentPage * 10 }));
+    }
+  };
+
+  const renderPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      dispatch(fetchBooks({ query, startIndex: (currentPage - 2) * 10 }));
+    }
+  };
+
+  const pagination =
+    totalItems > 0 ? (
+      <Pagination
+        currentPage={currentPage}
+        totalPages={pageCount}
+        onNext={renderNextPage}
+        onPrevious={renderPreviousPage}
+      />
+    ) : null;
 
   return (
     <div>
@@ -40,13 +73,23 @@ const BookSearch: React.FC = () => {
           Search
         </button>
       </form>
+      {pagination}
       {loading ? (
         <Spinner spinnerText={`Loading ${query} books...`} />
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : (
-        <BookList />
+        <>
+          {isInitialRender ? (
+            <p className={styles.info}>
+              Enter a keyword and click search to start
+            </p>
+          ) : (
+            <BookList />
+          )}
+        </>
       )}
+      {pagination}
     </div>
   );
 };

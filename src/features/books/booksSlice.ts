@@ -6,6 +6,7 @@ import { Book } from '../../types/Book';
 // Define a type for the slice state
 export interface BooksState {
   data: Book[];
+  totalItems: number;
   loading: boolean;
   error: string | null;
 }
@@ -13,6 +14,7 @@ export interface BooksState {
 // Define the initial state using that type
 const initialState: BooksState = {
   data: [],
+  totalItems: 0,
   loading: false,
   error: null,
 };
@@ -20,12 +22,13 @@ const initialState: BooksState = {
 // Async thunk for fetching books with query
 export const fetchBooks = createAsyncThunk(
   'books/fetchBooks',
-  async (query: string) => {
+  async ({ query, startIndex }: { query: string; startIndex: number }) => {
+    console.log(query, startIndex);
     const res = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=10&langRestrict=en`
+      `https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=10&langRestrict=en&startIndex=${startIndex}`
     );
 
-    return res.data.items;
+    return res.data;
   }
 );
 
@@ -40,7 +43,9 @@ export const booksSlice = createSlice({
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
+        state.data = action.payload.items;
+        // state.totalItems = action.payload.totalItems;
+        state.totalItems = 50; // Google books API does not provide a consistent value for totalItems, so we hardcode it
       })
       .addCase(fetchBooks.rejected, (state) => {
         state.loading = false;
@@ -53,5 +58,6 @@ export default booksSlice.reducer;
 
 // Selectors
 export const selectAllBooks = (state: RootState) => state.books.data;
+export const selectTotalItems = (state: RootState) => state.books.totalItems;
 export const selectBooksLoading = (state: RootState) => state.books.loading;
 export const selectBooksError = (state: RootState) => state.books.error;
