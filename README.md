@@ -1,50 +1,66 @@
-# React + TypeScript + Vite
+# Book Finder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+Book Finder is a web application that allows users to search for books using the Google Books API. Users can enter a query to find books and navigate through the results with pagination. The app provides a user-friendly interface to explore the latest books based on their search criteria.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Search for books by title, author, or keywords.
+- View a list of books with details such as title, author, and publication date.
+- Pagination support to navigate through multiple pages of results.
+- Loading spinner to indicate when data is being fetched.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Technologies Used
 
-- Configure the top-level `parserOptions` property like this:
+- **React**: A JavaScript library for building user interfaces.
+- **Vite**: A build tool and development environment.
+- **TypeScript**: A superset of JavaScript that adds optional static typing and other features.
+- **Redux Toolkit**: For state management and handling asynchronous actions.
+- **Axios**: For making HTTP requests to the Google Books API.
+- **CSS Modules**: For styling components.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Installation
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+To get started with Book Finder, follow these steps:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Clone the repository:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+   ```bash
+   git clone https://github.com/cuneytakcay/book-finder.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd book-finder
+   ```
+
+3. Install the dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open your browser and go to `http://localhost:5173` to view the app.
+
+## Usage
+
+1. Enter your search query in the input field.
+2. Click the search button or press Enter to fetch the results.
+3. Use the pagination controls to navigate through the pages of results.
+4. Click on a book to view more details (if applicable).
+
+## Contributing
+
+If you'd like to contribute to Book Finder, please fork the repository and submit a pull request with your changes.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
