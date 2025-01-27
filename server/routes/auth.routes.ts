@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import validator from 'express-validator';
-import { registerUser } from '../controllers/auth.controllers';
+import { registerUser, loginUser } from '../controllers/auth.controllers';
 
 const router = express.Router();
 const { check } = validator;
@@ -26,5 +26,14 @@ router.post(
     }
   }
 );
+
+// Login to get a JWT token
+router.post('/user/login', async (req: Request, res: Response) => {
+  try {
+    await loginUser(req, res);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 export default router;
