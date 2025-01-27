@@ -6,6 +6,9 @@ import mongoose from 'mongoose';
 // Load environment variables from .env file
 dotenv.config();
 
+// Import Routes
+import authRoutes from './routes/auth.routes';
+
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
@@ -13,6 +16,9 @@ const MONGO_URL = process.env.MONGO_URL;
 // Middleware for JSON parser and cors
 app.use(express.json());
 app.use(cors());
+
+// Set up route paths
+app.use('/api/auth', authRoutes);
 
 // Connect to MongoDB and Start the server
 mongoose
