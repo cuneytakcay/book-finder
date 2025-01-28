@@ -4,6 +4,7 @@ import type { RootState } from '../../app/store';
 import { IAuth, IRegisterUser } from '../../types/Auth.types';
 
 const initialState: IAuth = {
+  token: '',
   isAuthenticated: false,
   isLoading: false,
 };
@@ -12,7 +13,11 @@ export const registerUser = createAsyncThunk(
   'auth/register',
   async (userData: IRegisterUser, thunkAPI) => {
     try {
-      const res = await axios.post('/api/auth/user/register', userData);
+      const res = await axios.post('/api/auth/user/register', userData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
 
       return res.data;
     } catch (error) {
@@ -30,9 +35,10 @@ export const authSlice = createSlice({
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(registerUser.fulfilled, (state) => {
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.token = action.payload.token;
         state.isLoading = false;
-        state.isAuthenticated = true;
+        localStorage.setItem('token', action.payload.token);
       })
       .addCase(registerUser.rejected, (state) => {
         state.isLoading = false;
@@ -42,6 +48,7 @@ export const authSlice = createSlice({
 
 export default authSlice.reducer;
 
+export const selectToken = (state: RootState) => state.auth.token;
 export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;
