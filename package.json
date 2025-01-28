@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
-    "start:server": "tsx server/server.ts",
+    "start:server": "tsx --watch server/server.ts",
     "start:client": "npm run dev"
   },
   "dependencies": {

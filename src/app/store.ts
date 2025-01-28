@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
+import authReducer from '../features/auth/authSlice';
 import booksReducer from '../features/books/booksSlice';
 import bookDetailReducer from '../features/bookDetail/bookDetailSlice';
 import modalReducer from '../features/modal/modalSlice';
 
 export const store = configureStore({
   reducer: {
+    auth: authReducer,
     books: booksReducer,
     bookDetail: bookDetailReducer,
     modal: modalReducer,

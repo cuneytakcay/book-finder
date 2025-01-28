@@ -4,8 +4,8 @@ import BookSearch from './features/books/BookSearch';
 import BookDetail from './features/bookDetail/BookDetail';
 import Footer from './components/Footer';
 import ModalContainer from './features/modal/ModalContainer';
-import ModalLoginForm from './features/modal/ModalLoginForm';
-import ModalRegisterForm from './features/modal/ModalRegisterForm';
+import LoginForm from './features/auth/LoginForm';
+import RegisterForm from './features/auth/RegisterForm';
 import './styles.css';
 
 import { useAppSelector } from './app/hooks';
@@ -32,8 +32,8 @@ function App() {
         <ModalContainer
           title={modalFormType === 'login' ? 'Login' : 'Register'}
         >
-          {modalFormType === 'login' && <ModalLoginForm />}
-          {modalFormType === 'register' && <ModalRegisterForm />}
+          {modalFormType === 'login' && <LoginForm />}
+          {modalFormType === 'register' && <RegisterForm />}
         </ModalContainer>
       )}
     </>

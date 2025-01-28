@@ -1,4 +1,4 @@
-import styles from './ModalForm.module.css';
+import styles from './Form.module.css';
 
 const Login: React.FC = () => {
   return (
