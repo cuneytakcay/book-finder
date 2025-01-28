@@ -1,6 +1,11 @@
 import express, { Request, Response } from 'express';
 import validator from 'express-validator';
-import { registerUser, loginUser } from '../controllers/auth.controllers';
+import {
+  registerUser,
+  loginUser,
+  getLoggedInUser,
+} from '../controllers/auth.controllers';
+import verifyToken from '../middleware/verifyToken';
 
 const router = express.Router();
 const { check } = validator;
@@ -31,6 +36,15 @@ router.post(
 router.post('/user/login', async (req: Request, res: Response) => {
   try {
     await loginUser(req, res);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Get logged in user
+router.get('/user', verifyToken, async (req: Request, res: Response) => {
+  try {
+    await getLoggedInUser(req, res);
   } catch (error) {
     res.status(500).json(error);
   }
