@@ -2,6 +2,7 @@ export interface IAuth {
   token: string;
   isAuthenticated: boolean;
   isLoading: boolean;
+  user: IAuthorizedUser | null;
 }
 
 export interface IRegisterUser {
@@ -9,4 +10,11 @@ export interface IRegisterUser {
   lastName: string;
   email: string;
   password: string;
+}
+
+export interface IAuthorizedUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
 }

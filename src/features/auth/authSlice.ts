@@ -7,6 +7,7 @@ const initialState: IAuth = {
   token: '',
   isAuthenticated: false,
   isLoading: false,
+  user: null,
 };
 
 export const registerUser = createAsyncThunk(
@@ -52,3 +53,4 @@ export const selectToken = (state: RootState) => state.auth.token;
 export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;
+export const selectUser = (state: RootState) => state.auth.user;
