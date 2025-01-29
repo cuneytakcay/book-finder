@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 dotenv.config();
 
 // Import Routes
-import authRoutes from './routes/auth.routes';
+import authRoutes from './routes/auth.route';
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;

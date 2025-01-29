@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../../app/store';
-import { IAuth, IRegisterUser } from '../../types/Auth.types';
+import { IAuth, IRegisterUser } from '../../types/Auth.type';
 
 const initialState: IAuth = {
   token: '',

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../../app/store';
-import { Book } from '../../types/Book';
+import { Book } from '../../types/Book.type';
 
 // Define a type for the slice state
 export interface BookDetailState {

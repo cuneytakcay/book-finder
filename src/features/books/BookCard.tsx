@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { BookCardProps } from '../../types/Book';
+import { BookCardProps } from '../../types/Book.type';
 import styles from './BookCard.module.css';
 
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
