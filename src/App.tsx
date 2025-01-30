@@ -21,11 +21,13 @@ function App() {
   return (
     <>
       <Header />
-      <main className='container'>
-        <Routes>
-          <Route path='/' element={<BookSearch />} />
-          <Route path='/book/:id' element={<BookDetail />} />
-        </Routes>
+      <main className='main'>
+        <div className='container'>
+          <Routes>
+            <Route path='/' element={<BookSearch />} />
+            <Route path='/book/:id' element={<BookDetail />} />
+          </Routes>
+        </div>
       </main>
       <Footer />
       {isModalOpen && (

@@ -82,7 +82,7 @@ const BookSearch: React.FC = () => {
         <>
           {isInitialRender ? (
             <p className={styles.info}>
-              Enter a keyword and click search to start
+              Enter a keyword and click search button to start
             </p>
           ) : (
             <BookList />
