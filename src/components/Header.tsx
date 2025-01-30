@@ -2,9 +2,15 @@ import styles from './Header.module.css';
 
 import { useAppDispatch } from '../app/hooks';
 import { openModal } from '../features/modal/modalSlice';
+import { clearStatus } from '../features/auth/authSlice';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
+
+  const handleModal = (formType: 'login' | 'register') => {
+    dispatch(clearStatus());
+    dispatch(openModal(formType));
+  };
 
   return (
     <header className={styles.header}>
@@ -12,13 +18,13 @@ const Header: React.FC = () => {
       <nav>
         <button
           className={styles['nav-link']}
-          onClick={() => dispatch(openModal('login'))}
+          onClick={() => handleModal('login')}
         >
           Login
         </button>
         <button
           className={styles['nav-link']}
-          onClick={() => dispatch(openModal('register'))}
+          onClick={() => handleModal('register')}
         >
           Register
         </button>

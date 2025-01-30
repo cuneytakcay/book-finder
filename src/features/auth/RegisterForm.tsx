@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import styles from './Form.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 // Redux toolkit
-import { useAppDispatch } from '../../app/hooks';
-import { registerUser } from './authSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { registerUser, selectIsLoading, selectStatus } from './authSlice';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(selectIsLoading);
+  const { success, message } = useAppSelector(selectStatus);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -60,7 +64,14 @@ const Register: React.FC = () => {
           onChange={handleChange}
         />
       </label>
-      <button type='submit'>Register</button>
+      <button type='submit' disabled={isLoading}>
+        {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Register'}
+      </button>
+      <div style={{ height: '30px' }}>
+        {message && (
+          <p className={success ? styles.success : styles.error}>{message}</p>
+        )}
+      </div>
     </form>
   );
 };

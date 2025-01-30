@@ -2,6 +2,10 @@ export interface IAuth {
   token: string;
   isAuthenticated: boolean;
   isLoading: boolean;
+  status: {
+    success: boolean;
+    message: string | null;
+  };
   user: IAuthorizedUser | null;
 }
 
