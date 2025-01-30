@@ -8,11 +8,8 @@ const { validationResult } = validator;
 
 // Register to create a user account
 export const registerUser = async (req: Request, res: Response) => {
-  const errors = validationResult(req);
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  const validatorErrors = validationResult(req);
+  let errors = [...validatorErrors.array()];
 
   const { firstName, lastName, email, password } = req.body;
 
@@ -20,9 +17,20 @@ export const registerUser = async (req: Request, res: Response) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res
-        .status(400)
-        .json({ errors: [{ message: 'User already exists' }] });
+      errors = [
+        ...errors,
+        {
+          type: 'field',
+          value: email,
+          msg: 'User with this email already exists',
+          path: 'email',
+          location: 'body',
+        },
+      ];
+    }
+
+    if (errors.length > 0) {
+      return res.status(400).json({ errors });
     }
 
     const hashedPassword = CryptoJS.AES.encrypt(
