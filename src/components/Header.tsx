@@ -2,13 +2,13 @@ import styles from './Header.module.css';
 
 import { useAppDispatch } from '../app/hooks';
 import { openModal } from '../features/modal/modalSlice';
-import { clearStatus } from '../features/auth/authSlice';
+import { clearState } from '../features/auth/authSlice';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const handleModal = (formType: 'login' | 'register') => {
-    dispatch(clearStatus());
+    dispatch(clearState());
     dispatch(openModal(formType));
   };
 

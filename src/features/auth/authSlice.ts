@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
-import { IAuth, IRegisterUser, IError } from '../../types/Auth.type';
+import { IAuth, IError } from '../../types/Auth.type';
+import { registerUser } from './authActions';
 
 const initialState: IAuth = {
   token: '',
@@ -15,32 +15,11 @@ const initialState: IAuth = {
   user: null,
 };
 
-export const registerUser = createAsyncThunk(
-  'auth/register',
-  async (userData: IRegisterUser, thunkAPI) => {
-    try {
-      const res = await axios.post('/api/auth/user/register', userData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      return res.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const errorData: IError[] = error.response?.data.errors || [];
-        return thunkAPI.rejectWithValue(errorData);
-      }
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    clearStatus: (state) => {
+    clearState: (state) => {
       state.status.success = false;
       state.status.message = null;
       state.errors = [];
@@ -69,7 +48,7 @@ export const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { clearStatus } = authSlice.actions;
+export const { clearState } = authSlice.actions;
 
 export const selectToken = (state: RootState) => state.auth.token;
 export const selectIsAuthenticated = (state: RootState) =>

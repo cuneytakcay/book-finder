@@ -10,11 +10,12 @@ import {
 // Redux toolkit
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  registerUser,
   selectIsLoading,
   selectStatus,
   selectErrors,
+  clearState,
 } from './authSlice';
+import { registerUser } from './authActions';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -35,6 +36,7 @@ const Register: React.FC = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    dispatch(clearState());
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
