@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../../app/store';
-import { IAuth, IRegisterUser } from '../../types/Auth.type';
+import { IAuth, IRegisterUser, IError } from '../../types/Auth.type';
 
 const initialState: IAuth = {
   token: '',
@@ -11,6 +11,7 @@ const initialState: IAuth = {
     success: false,
     message: null,
   },
+  errors: [],
   user: null,
 };
 
@@ -26,6 +27,10 @@ export const registerUser = createAsyncThunk(
 
       return res.data;
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorData: IError[] = error.response?.data.errors || [];
+        return thunkAPI.rejectWithValue(errorData);
+      }
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -38,6 +43,7 @@ export const authSlice = createSlice({
     clearStatus: (state) => {
       state.status.success = false;
       state.status.message = null;
+      state.errors = [];
     },
   },
   extraReducers: (builder) => {
@@ -48,14 +54,15 @@ export const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.isLoading = false;
-        localStorage.setItem('token', action.payload.token);
         state.status.success = true;
-        state.status.message = 'Registration successful!';
+        state.status.message = action.payload.message;
+        localStorage.setItem('token', action.payload.token);
       })
-      .addCase(registerUser.rejected, (state) => {
+      .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         state.status.success = false;
-        state.status.message = 'Registration failed!'; // Use a more specific error handling
+        state.status.message = 'Registration failed!';
+        state.errors = [...(action.payload as IError[])];
       });
   },
 });
@@ -69,4 +76,5 @@ export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;
 export const selectStatus = (state: RootState) => state.auth.status;
+export const selectErrors = (state: RootState) => state.auth.errors;
 export const selectUser = (state: RootState) => state.auth.user;

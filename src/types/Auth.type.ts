@@ -6,7 +6,16 @@ export interface IAuth {
     success: boolean;
     message: string | null;
   };
+  errors: IError[];
   user: IAuthorizedUser | null;
+}
+
+export interface IError {
+  type: string;
+  value: string;
+  msg: string;
+  path: string;
+  location: string;
 }
 
 export interface IRegisterUser {

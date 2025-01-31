@@ -21,7 +21,7 @@ export const registerUser = async (req: Request, res: Response) => {
         ...errors,
         {
           type: 'field',
-          value: email,
+          value: 'email',
           msg: 'User with this email already exists',
           path: 'email',
           location: 'body',
