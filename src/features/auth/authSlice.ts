@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import { IAuth, IError } from '../../types/Auth.type';
-import { registerUser } from './authActions';
+import { registerUser, loginUser } from './authActions';
 
 const initialState: IAuth = {
   token: '',
@@ -42,6 +42,19 @@ export const authSlice = createSlice({
         state.status.success = false;
         state.status.message = 'Registration failed!';
         state.errors = [...(action.payload as IError[])];
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.token = action.payload.token;
+        state.isLoading = false;
+        localStorage.setItem('token', action.payload.token);
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.status.success = false;
+        state.status.message = action.payload as string;
       });
   },
 });

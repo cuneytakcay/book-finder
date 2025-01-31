@@ -64,7 +64,8 @@
 }
 
 .error,
-.success {
+.success,
+.fail {
   font-weight: bold;
   margin: 0;
   display: flex;
@@ -87,4 +88,10 @@
 
 .success svg {
   font-size: 2rem;
+}
+
+.fail {
+  color: #df2424;
+  font-size: 1.25rem;
+  justify-content: center;
 }

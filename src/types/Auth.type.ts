@@ -25,6 +25,11 @@ export interface IRegisterUser {
   password: string;
 }
 
+export interface ILoginUser {
+  email: string;
+  password: string;
+}
+
 export interface IAuthorizedUser {
   id: string;
   firstName: string;
