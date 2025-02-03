@@ -1,5 +1,6 @@
 import { Schema, model, Document, Model } from 'mongoose';
 import CryptoJS from 'crypto-js';
+import validator from 'validator';
 
 // Define an interface for the User document
 interface IUser extends Document {
@@ -33,6 +34,26 @@ userSchema.statics.register = async function ({
   email,
   password,
 }: IUser) {
+  const errors: string[] = [];
+
+  if (validator.isEmpty(firstName)) errors.push('First name cannot be empty');
+
+  if (validator.isEmpty(lastName)) errors.push('Last name cannot be empty');
+
+  if (!email || !validator.isEmail(email)) errors.push('Invalid email');
+
+  if (
+    !validator.matches(
+      password,
+      /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/
+    )
+  )
+    errors.push(
+      'Password must contain at least one number and one special character and must be at least 8 characters long'
+    );
+
+  if (errors.length) throw new Error(errors.join(', '));
+
   const hashedPassword = CryptoJS.AES.encrypt(
     password,
     process.env.CRYPTO_SECRET_KEY
