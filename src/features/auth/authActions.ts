@@ -15,8 +15,8 @@ export const registerUser = createAsyncThunk(
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        const errorData = error.response?.data.errors || [];
-        return thunkAPI.rejectWithValue(errorData);
+        const errorMessage = error.response?.data.message;
+        return thunkAPI.rejectWithValue(errorMessage);
       }
       return thunkAPI.rejectWithValue(error);
     }

@@ -1,29 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { IRegisterUser } from '../../types/Auth.type';
 import styles from './Form.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSpinner,
-  faCheckCircle,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Redux toolkit
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import {
-  selectIsLoading,
-  selectStatus,
-  selectErrors,
-  clearState,
-} from './authSlice';
+import { selectIsLoading, selectError } from './authSlice';
 import { registerUser } from './authActions';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsLoading);
-  const { success, message } = useAppSelector(selectStatus);
-  const errors = useAppSelector(selectErrors);
+  const error = useAppSelector(selectError);
 
-  const [formData, setFormData] = useState({
+  // Frontend form validation
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirm: '',
+    },
+  });
+
+  const [formData, setFormData] = useState<IRegisterUser>({
     firstName: '',
     lastName: '',
     email: '',
@@ -31,106 +42,123 @@ const Register: React.FC = () => {
     confirm: '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
+  useEffect(() => {
+    const subscription = watch((value) => {
+      const firstNameValue = value.firstName || '';
+      const lastNameValue = value.lastName || '';
+      const emailValue = value.email || '';
+      const passwordValue = value.password || '';
+      const confirmValue = value.confirm || '';
+
+      setFormData({
+        firstName: firstNameValue,
+        lastName: lastNameValue,
+        email: emailValue,
+        password: passwordValue,
+        confirm: confirmValue,
+      });
     });
-    dispatch(clearState());
-  };
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    dispatch(registerUser(formData));
-  };
-
-  const createValidationMessage = (path: string) => {
-    const errorMessage = errors.find((err) => err.path === path)?.msg;
-
-    return errorMessage ? (
-      <p className={styles.error}>
-        <FontAwesomeIcon icon={faExclamationCircle} />
-        {errorMessage}
-      </p>
-    ) : null;
-  };
+  const onSubmit = (data: IRegisterUser) => dispatch(registerUser(data));
 
   return (
     <>
-      {message && success ? (
-        <div className={styles['success-container']}>
-          <p className={styles.success}>
-            <FontAwesomeIcon icon={faCheckCircle} />
-            {message}
-          </p>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className={styles.form} noValidate>
-          <div className={styles['input-wrapper']}>
-            <label>
-              First Name
-              <input
-                type='text'
-                required
-                name='firstName'
-                onChange={handleChange}
-              />
-            </label>
-            {createValidationMessage('firstName')}
-          </div>
-          <div className={styles['input-wrapper']}>
-            <label>
-              Last Name
-              <input
-                type='text'
-                required
-                name='lastName'
-                onChange={handleChange}
-              />
-            </label>
-            {createValidationMessage('lastName')}
-          </div>
-          <div className={styles['input-wrapper']}>
-            <label>
-              Email
-              <input
-                type='email'
-                required
-                name='email'
-                onChange={handleChange}
-              />
-            </label>
-            {createValidationMessage('email')}
-          </div>
-          <div className={styles['input-wrapper']}>
-            <label>
-              Password
-              <input
-                type='password'
-                required
-                name='password'
-                onChange={handleChange}
-              />
-            </label>
-            {createValidationMessage('password')}
-          </div>
-          <div className={styles['input-wrapper']}>
-            <label>
-              Confirm Password
-              <input
-                type='password'
-                required
-                name='confirm'
-                onChange={handleChange}
-              />
-            </label>
-            {createValidationMessage('confirm')}
-          </div>
-          <button type='submit' disabled={isLoading}>
-            {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Register'}
-          </button>
-        </form>
+      {error && (
+        <p className={styles['login-error']}>
+          <FontAwesomeIcon icon={faExclamationCircle} />
+          {error}
+        </p>
       )}
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+      >
+        <div className={styles['input-wrapper']}>
+          <label>
+            First Name
+            <input
+              type='text'
+              {...register('firstName', { required: 'Field cannot be empty' })}
+            />
+          </label>
+          {errors.firstName && (
+            <p className={styles.error}>{errors.firstName.message}</p>
+          )}
+        </div>
+        <div className={styles['input-wrapper']}>
+          <label>
+            Last Name
+            <input
+              type='text'
+              {...register('lastName', { required: 'Field cannot be empty' })}
+            />
+          </label>
+          {errors.lastName && (
+            <p className={styles.error}>{errors.lastName.message}</p>
+          )}
+        </div>
+        <div className={styles['input-wrapper']}>
+          <label>
+            Email
+            <input
+              type='email'
+              {...register('email', {
+                required: 'Field cannot be empty',
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: 'Not a valid email address.',
+                },
+              })}
+            />
+          </label>
+          {errors.email && (
+            <p className={styles.error}>{errors.email.message}</p>
+          )}
+        </div>
+        <div className={styles['input-wrapper']}>
+          <label>
+            Password
+            <input
+              type='password'
+              {...register('password', {
+                required: 'Password is required.',
+                pattern: {
+                  value: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
+                  message: `
+                    Password must contain at least one number and at least one special
+                    character and must be at least 8 characters long
+                  `,
+                },
+              })}
+            />
+          </label>
+          {errors.password && (
+            <p className={styles.error}>{errors.password.message}</p>
+          )}
+        </div>
+        <div className={styles['input-wrapper']}>
+          <label>
+            Confirm Password
+            <input
+              type='password'
+              {...register('confirm', {
+                required: 'Password confirmation is required.',
+                validate: (value) =>
+                  value === formData.password || 'Passwords do not match.',
+              })}
+            />
+          </label>
+          {errors.confirm && (
+            <p className={styles.error}>{errors.confirm.message}</p>
+          )}
+        </div>
+        <button type='submit' disabled={isLoading}>
+          {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Register'}
+        </button>
+      </form>
     </>
   );
 };

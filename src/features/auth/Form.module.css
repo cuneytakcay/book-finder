@@ -56,16 +56,8 @@
   text-decoration: underline;
 }
 
-.success-container {
-  min-height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .error,
-.success,
-.fail {
+.login-error {
   font-weight: bold;
   margin: 0;
   display: flex;
@@ -80,17 +72,7 @@
   bottom: -20px;
 }
 
-.success {
-  font-size: 1.5rem;
-  color: #36a83a;
-  text-align: center;
-}
-
-.success svg {
-  font-size: 2rem;
-}
-
-.fail {
+.login-error {
   color: #df2424;
   font-size: 1.25rem;
   justify-content: center;

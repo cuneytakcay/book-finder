@@ -1,21 +1,7 @@
 export interface IAuth {
-  token: string;
-  isAuthenticated: boolean;
+  user: IAuthanticatedUser | null;
   isLoading: boolean;
-  status: {
-    success: boolean;
-    message: string | null;
-  };
-  errors: IError[];
-  user: IAuthorizedUser | null;
-}
-
-export interface IError {
-  type: string;
-  value: string;
-  msg: string;
-  path: string;
-  location: string;
+  error: string | null;
 }
 
 export interface IRegisterUser {
@@ -23,6 +9,7 @@ export interface IRegisterUser {
   lastName: string;
   email: string;
   password: string;
+  confirm: string;
 }
 
 export interface ILoginUser {
@@ -30,9 +17,8 @@ export interface ILoginUser {
   password: string;
 }
 
-export interface IAuthorizedUser {
-  id: string;
-  firstName: string;
-  lastName: string;
+export interface IAuthanticatedUser {
+  token: string;
+  message: string;
   email: string;
 }
