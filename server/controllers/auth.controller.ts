@@ -37,14 +37,3 @@ export const loginUser = async (req: Request, res: Response) => {
     res.status(404).json({ message: error.message });
   }
 };
-
-// Get logged in user
-export const getLoggedInUser = async (req: Request, res: Response) => {
-  try {
-    const user = await User.findById(req.user?.id).select('-password');
-
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};

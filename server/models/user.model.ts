@@ -1,21 +1,7 @@
-import { Schema, model, Document, Model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import CryptoJS from 'crypto-js';
 import validator from 'validator';
-
-// Define an interface for the User document
-interface IUser extends Document {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface IUserModel extends Model<IUser> {
-  register: (userData: IUser) => Promise<IUser>;
-  login: (credentials: { email: string; password: string }) => Promise<IUser>;
-}
+import { IUser, IUserModel } from '../types/User.type';
 
 // Define the User schema
 const userSchema = new Schema<IUser>({
