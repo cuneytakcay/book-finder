@@ -13,6 +13,7 @@ interface IUser extends Document {
 
 interface IUserModel extends Model<IUser> {
   register: (userData: IUser) => Promise<IUser>;
+  login: (credentials: { email: string; password: string }) => Promise<IUser>;
 }
 
 // Define the User schema
@@ -43,6 +44,30 @@ userSchema.statics.register = async function ({
     email,
     password: hashedPassword,
   });
+
+  return user;
+};
+
+// Static method for logging in a user
+userSchema.statics.login = async function ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
+  const user = await this.findOne({ email });
+
+  if (!user) throw new Error('Invalid user credentials');
+
+  const bytes = CryptoJS.AES.decrypt(
+    user.password,
+    process.env.CRYPTO_SECRET_KEY
+  );
+  const originalPassword = bytes.toString(CryptoJS.enc.Utf8);
+
+  if (originalPassword !== password)
+    throw new Error('Invalid user credentials');
 
   return user;
 };
