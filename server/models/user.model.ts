@@ -1,4 +1,5 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Model } from 'mongoose';
+import CryptoJS from 'crypto-js';
 
 // Define an interface for the User document
 interface IUser extends Document {
@@ -8,6 +9,10 @@ interface IUser extends Document {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+interface IUserModel extends Model<IUser> {
+  register: (userData: IUser) => Promise<IUser>;
 }
 
 // Define the User schema
@@ -20,7 +25,29 @@ const userSchema = new Schema<IUser>({
   updatedAt: { type: Date, default: Date.now },
 });
 
+// Static method for registering a new user
+userSchema.statics.register = async function ({
+  firstName,
+  lastName,
+  email,
+  password,
+}: IUser) {
+  const hashedPassword = CryptoJS.AES.encrypt(
+    password,
+    process.env.CRYPTO_SECRET_KEY
+  ).toString();
+
+  const user = await this.create({
+    firstName,
+    lastName,
+    email,
+    password: hashedPassword,
+  });
+
+  return user;
+};
+
 // Create the User model
-const User = model<IUser>('User', userSchema);
+const User: IUserModel = model<IUser, IUserModel>('User', userSchema);
 
 export default User;
