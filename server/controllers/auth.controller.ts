@@ -18,7 +18,10 @@ export const registerUser = async (req: Request, res: Response) => {
       .status(201)
       .json({ message: 'User created successfully', email: user.email, token });
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    const message =
+      error.code === 11000 ? 'User already exists' : error.message;
+
+    res.status(409).json({ message });
   }
 };
 
