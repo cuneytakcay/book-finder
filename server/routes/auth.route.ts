@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { registerUser, loginUser } from '../controllers/auth.controller';
+import verifyToken from '../middleware/verifyToken';
 
 const router = express.Router();
 
@@ -16,6 +17,15 @@ router.post('/user/register', async (req: Request, res: Response) => {
 router.post('/user/login', async (req: Request, res: Response) => {
   try {
     await loginUser(req, res);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Protected route to get user information
+router.get('/user', verifyToken, async (req: Request, res: Response) => {
+  try {
+    res.status(200).json(req.user);
   } catch (error) {
     res.status(500).json(error);
   }
