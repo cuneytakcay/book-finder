@@ -13,16 +13,16 @@ const Header: React.FC = () => {
     dispatch(openModal(formType));
   };
 
-  const handleLogOut = () => dispatch(logoutUser());
+  const handleLogout = () => dispatch(logoutUser());
 
   return (
     <header className={styles.header}>
       <h1>Book Finder</h1>
       <div className={styles.nav}>
-        {user && <p>Welcome {user?.email}!</p>}
+        {user && <p>{user?.email}</p>}
         <nav>
           {user ? (
-            <button className={styles['nav-link']} onClick={handleLogOut}>
+            <button className={styles['nav-link']} onClick={handleLogout}>
               Logout
             </button>
           ) : (
