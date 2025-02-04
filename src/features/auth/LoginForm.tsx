@@ -11,7 +11,7 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectIsLoading, selectError, selectUser } from './authSlice';
 import { loginUser } from './authActions';
-import { closeModal } from '../modal/modalSlice';
+import { closeModal, openModal } from '../modal/modalSlice';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -108,7 +108,19 @@ const Login: React.FC = () => {
                 <p className={styles.error}>{errors.password.message}</p>
               )}
             </div>
-            <button type='submit'>Login</button>
+            <button type='submit' className='solid-btn'>
+              Login
+            </button>
+            <p>
+              Don't have an account?{' '}
+              <button
+                type='button'
+                className='link-btn'
+                onClick={() => dispatch(openModal('register'))}
+              >
+                Register
+              </button>
+            </p>
           </form>
         </>
       ) : (

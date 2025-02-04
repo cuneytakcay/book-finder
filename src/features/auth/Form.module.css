@@ -34,26 +34,10 @@
 
 .form button {
   padding: 0.5rem 1rem;
-  background-color: #47436d;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
   margin: 10px auto 0;
   width: 100%;
   height: 40px;
   max-width: 400px;
-}
-
-.forgotPassword {
-  background-color: transparent !important;
-  border: none;
-  color: #47436d !important;
-  text-align: center;
-}
-
-.forgotPassword:hover {
-  border: none !important;
-  text-decoration: underline;
 }
 
 .error,
