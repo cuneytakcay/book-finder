@@ -23,7 +23,6 @@ const initialState: BooksState = {
 export const fetchBooks = createAsyncThunk(
   'books/fetchBooks',
   async ({ query, startIndex }: { query: string; startIndex: number }) => {
-    console.log(query, startIndex);
     const res = await axios.get(
       `https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=10&langRestrict=en&startIndex=${startIndex}`
     );

@@ -1,10 +1,33 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { BookCardProps } from '../../types/Book.type';
 import styles from './BookCard.module.css';
 
+// Redux toolkit
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectUser } from '../auth/authSlice';
+import { openModal } from '../modal/modalSlice';
+
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
+
+  const [selectedOption, setSelectedOption] = useState('');
+
+  useEffect(() => {
+    if (selectedOption && selectedOption.length > 0) {
+      if (user) {
+        console.log(user);
+        // Function to save the book to the books collection
+        // Function to save the book id to the user's books collection
+      } else {
+        dispatch(openModal('login'));
+      }
+    }
+  }, [selectedOption, dispatch, user]);
+
   return (
     <div className={styles.card}>
       <div className={styles.imagebox}>
@@ -40,6 +63,14 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           Read More <FontAwesomeIcon icon={faArrowRight} />
         </Link>
       </div>
+      <select
+        className={styles.select}
+        onChange={(e) => setSelectedOption(e.target.value)}
+      >
+        <option value=''>--Select an option--</option>
+        <option value='have-read'>Have read</option>
+        <option value='want-to-read'>Want to read</option>
+      </select>
     </div>
   );
 };

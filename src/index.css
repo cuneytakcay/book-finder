@@ -13,7 +13,8 @@ body,
 }
 
 body {
-  background-image: url('./assets/body-background.webp');
+  background-image: linear-gradient(rgb(0 0 0 / 40%), rgb(0 0 0 / 80%)),
+    url('./assets/body-background.webp');
   background-size: cover;
   background-repeat: no-repeat;
 }
