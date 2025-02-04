@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ILoginUser } from '../../types/Auth.type';
+import Spinner from '../../components/Spinner';
 import styles from './Form.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSpinner,
-  faExclamationCircle,
-} from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Redux toolkit
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectIsLoading, selectError } from './authSlice';
+import { selectIsLoading, selectError, selectUser } from './authSlice';
 import { loginUser } from './authActions';
 import { closeModal } from '../modal/modalSlice';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
   const isLoading = useAppSelector(selectIsLoading);
   const error = useAppSelector(selectError);
 
@@ -38,72 +39,83 @@ const Login: React.FC = () => {
   });
 
   useEffect(() => {
+    // Close modal and navigate to home page if user is already logged in
+    if (user) {
+      dispatch(closeModal());
+      navigate('/');
+    }
+
     const subscription = watch((value) => {
       const emailValue = value.email || '';
       const passwordValue = value.password || '';
       setFormData({ email: emailValue, password: passwordValue });
     });
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch, user, navigate, dispatch]);
 
-  const onSubmit = async (data: ILoginUser) => {
-    await dispatch(loginUser(data));
-    dispatch(closeModal());
-  };
+  const onSubmit = (data: ILoginUser) => dispatch(loginUser(data));
 
   return (
     <>
-      {error && (
-        <p className={styles['login-error']}>
-          <FontAwesomeIcon icon={faExclamationCircle} />
-          {error}
-        </p>
+      {!isLoading ? (
+        <>
+          {error && (
+            <p className={styles['login-error']}>
+              <FontAwesomeIcon icon={faExclamationCircle} />
+              {error}
+            </p>
+          )}
+          <form
+            className={styles.form}
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+          >
+            <div
+              className={
+                formData.email.length > 0
+                  ? `${styles['input-wrapper']} filled`
+                  : styles['input-wrapper']
+              }
+            >
+              <label>
+                Email
+                <input
+                  type='email'
+                  {...register('email', { required: 'Field cannot be empty' })}
+                />
+              </label>
+              {errors.email && (
+                <p className={styles.error}>{errors.email.message}</p>
+              )}
+            </div>
+            <div
+              className={
+                formData.password.length > 0
+                  ? `${styles['input-wrapper']} filled`
+                  : styles['input-wrapper']
+              }
+            >
+              <label>
+                Password
+                <input
+                  type='password'
+                  {...register('password', {
+                    required: 'Field cannot be empty',
+                  })}
+                />
+              </label>
+              {errors.password && (
+                <p className={styles.error}>{errors.password.message}</p>
+              )}
+            </div>
+            <button type='submit'>Login</button>
+          </form>
+        </>
+      ) : (
+        <div className={styles.loading}>
+          <Spinner spinnerText='Redirecting...' />
+        </div>
       )}
-      <form
-        className={styles.form}
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-      >
-        <div
-          className={
-            formData.email.length > 0
-              ? `${styles['input-wrapper']} filled`
-              : styles['input-wrapper']
-          }
-        >
-          <label>
-            Email
-            <input
-              type='email'
-              {...register('email', { required: 'Field cannot be empty' })}
-            />
-          </label>
-          {errors.email && (
-            <p className={styles.error}>{errors.email.message}</p>
-          )}
-        </div>
-        <div
-          className={
-            formData.password.length > 0
-              ? `${styles['input-wrapper']} filled`
-              : styles['input-wrapper']
-          }
-        >
-          <label>
-            Password
-            <input
-              type='password'
-              {...register('password', { required: 'Field cannot be empty' })}
-            />
-          </label>
-          {errors.password && (
-            <p className={styles.error}>{errors.password.message}</p>
-          )}
-        </div>
-        <button type='submit' disabled={isLoading}>
-          {isLoading ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Login'}
-        </button>
-      </form>
     </>
   );
 };

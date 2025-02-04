@@ -77,3 +77,10 @@
   font-size: 1.25rem;
   justify-content: center;
 }
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
