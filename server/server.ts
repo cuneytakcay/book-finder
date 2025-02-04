@@ -8,6 +8,7 @@ dotenv.config();
 
 // Import Routes
 import authRoutes from './routes/auth.route';
+import booksRoutes from './routes/books.route';
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
@@ -19,6 +20,7 @@ app.use(cors());
 
 // Set up route paths
 app.use('/api/auth', authRoutes);
+app.use('/api/books', booksRoutes);
 
 // Connect to MongoDB and Start the server
 mongoose
