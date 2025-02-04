@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import Header from './components/Header';
 import BookSearch from './features/books/BookSearch';
 import BookDetail from './features/bookDetail/BookDetail';
@@ -8,15 +9,26 @@ import LoginForm from './features/auth/LoginForm';
 import RegisterForm from './features/auth/RegisterForm';
 import './styles.css';
 
-import { useAppSelector } from './app/hooks';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { setUser } from './features/auth/authSlice';
 import {
   selectModalState,
   selectModalFormType,
 } from './features/modal/modalSlice';
 
 function App() {
+  const dispatch = useAppDispatch();
+
   const isModalOpen = useAppSelector(selectModalState);
   const modalFormType = useAppSelector(selectModalFormType);
+
+  useEffect(() => {
+    // Load user from local storage
+    const user = localStorage.getItem('user');
+
+    // Dispatch an action to set the user in the store
+    if (user) dispatch(setUser(JSON.parse(user)));
+  }, [dispatch]);
 
   return (
     <>

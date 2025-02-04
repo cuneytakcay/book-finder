@@ -12,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectIsLoading, selectError } from './authSlice';
 import { registerUser } from './authActions';
+import { closeModal } from '../modal/modalSlice';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -61,7 +62,10 @@ const Register: React.FC = () => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const onSubmit = (data: IRegisterUser) => dispatch(registerUser(data));
+  const onSubmit = async (data: IRegisterUser) => {
+    await dispatch(registerUser(data));
+    dispatch(closeModal());
+  };
 
   return (
     <>

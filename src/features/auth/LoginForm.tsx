@@ -12,6 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectIsLoading, selectError } from './authSlice';
 import { loginUser } from './authActions';
+import { closeModal } from '../modal/modalSlice';
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,7 +46,10 @@ const Login: React.FC = () => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
-  const onSubmit = (data: ILoginUser) => dispatch(loginUser(data));
+  const onSubmit = async (data: ILoginUser) => {
+    await dispatch(loginUser(data));
+    dispatch(closeModal());
+  };
 
   return (
     <>

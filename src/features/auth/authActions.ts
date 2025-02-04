@@ -12,6 +12,9 @@ export const registerUser = createAsyncThunk(
         },
       });
 
+      // Set the user in localStorage
+      localStorage.setItem('user', JSON.stringify(res.data));
+
       return res.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -32,6 +35,9 @@ export const loginUser = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       });
+
+      // Set the user in localStorage
+      localStorage.setItem('user', JSON.stringify(res.data));
 
       return res.data;
     } catch (error) {
