@@ -1,5 +1,9 @@
 import express, { Request, Response } from 'express';
-import { registerUser, loginUser } from '../controllers/auth.controller';
+import {
+  registerUser,
+  loginUser,
+  updateUser,
+} from '../controllers/auth.controller';
 import verifyToken from '../middleware/verifyToken';
 
 const router = express.Router();
@@ -26,6 +30,15 @@ router.post('/user/login', async (req: Request, res: Response) => {
 router.get('/user', verifyToken, async (req: Request, res: Response) => {
   try {
     res.status(200).json(req.user);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Protected route to update user information
+router.patch('/user/:id', verifyToken, async (req: Request, res: Response) => {
+  try {
+    await updateUser(req, res);
   } catch (error) {
     res.status(500).json(error);
   }

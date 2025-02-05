@@ -9,7 +9,7 @@ dotenv.config();
 // Import Routes
 import authRoutes from './routes/auth.route';
 import booksRoutes from './routes/books.route';
-import libraryItemRoutes from './routes/libraryItem.route';
+import libraryItemsRoutes from './routes/libraryItems.route';
 
 const app: Express = express();
 const PORT = process.env.PORT || 5000;
@@ -22,7 +22,7 @@ app.use(cors());
 // Set up route paths
 app.use('/api/auth', authRoutes);
 app.use('/api/books', booksRoutes);
-app.use('/api/library', libraryItemRoutes);
+app.use('/api/library', libraryItemsRoutes);
 
 // Connect to MongoDB and Start the server
 mongoose

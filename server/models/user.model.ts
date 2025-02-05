@@ -4,14 +4,18 @@ import validator from 'validator';
 import { IUser, IUserModel } from '../types/User.type';
 
 // Define the User schema
-const userSchema = new Schema<IUser>({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+const userSchema = new Schema<IUser>(
+  {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    library: [{ type: Schema.Types.ObjectId, ref: 'LibraryItem' }],
+  },
+  {
+    timestamps: true,
+  }
+);
 
 // Static method for registering a new user
 userSchema.statics.register = async function ({

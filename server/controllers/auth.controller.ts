@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
 
@@ -36,6 +37,27 @@ export const loginUser = async (req: Request, res: Response) => {
       email: user.email,
       token,
     });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
+
+// Update user information
+export const updateUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  try {
+    const user = await User.findOneAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true }
+    );
+
+    res.status(200).json({ message: 'User updated successfully', user });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
