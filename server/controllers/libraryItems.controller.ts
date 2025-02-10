@@ -7,7 +7,7 @@ export const createLibraryItem = async (req: Request, res: Response) => {
     const libraryItem = await LibraryItem.create(req.body);
 
     res
-      .status(201)
+      .status(200)
       .json({ message: 'Library item created successfully', libraryItem });
   } catch (error) {
     return res.status(500).json({ message: error.message });

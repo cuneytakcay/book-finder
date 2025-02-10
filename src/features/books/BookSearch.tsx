@@ -73,7 +73,6 @@ const BookSearch: React.FC = () => {
           Search
         </button>
       </form>
-      {pagination}
       {loading ? (
         <Spinner spinnerText={`Loading ${query} books...`} />
       ) : error ? (

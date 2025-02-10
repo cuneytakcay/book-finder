@@ -9,7 +9,7 @@ import styles from './BookCard.module.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectUser } from '../auth/authSlice';
 import { openModal } from '../modal/modalSlice';
-import { saveBook } from './bookActions';
+import { saveBook, addBookToLibrary } from './bookActions';
 
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const dispatch = useAppDispatch();
@@ -20,9 +20,16 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
   useEffect(() => {
     if (selectedOption && selectedOption.length > 0) {
       if (user) {
-        // Function to save the google book to the books collection
-        dispatch(saveBook(book));
-        // Function to save the book id to the user's books collection
+        const handleBookActions = async () => {
+          // Function to save the google book to the books collection
+          await dispatch(saveBook(book));
+          // Function to save the book id to the user's books collection
+          await dispatch(
+            addBookToLibrary({ bookId: book.bookId, selectedOption })
+          );
+        };
+
+        handleBookActions();
       } else {
         dispatch(openModal('login'));
       }
