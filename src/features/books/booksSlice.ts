@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
-import { AppBook, GoogleBook } from '../../types/Book.type';
-import { serverToClientBook } from '../../utils/bookFactory';
+import { AppBook } from '../../types/Book.type';
+import { fetchBooks, saveBook } from './bookActions';
 
 // Define a type for the slice state
 export interface BooksState {
@@ -20,22 +19,6 @@ const initialState: BooksState = {
   error: null,
 };
 
-// Async thunk for fetching books with query
-export const fetchBooks = createAsyncThunk(
-  'books/fetchBooks',
-  async ({ query, startIndex }: { query: string; startIndex: number }) => {
-    const res = await axios.get(
-      `https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=10&langRestrict=en&startIndex=${startIndex}`
-    );
-
-    const items = res.data.items.map((item: GoogleBook) =>
-      serverToClientBook(item)
-    );
-
-    return { items, totalItems: res.data.totalItems };
-  }
-);
-
 export const booksSlice = createSlice({
   name: 'books',
   initialState,
@@ -47,6 +30,7 @@ export const booksSlice = createSlice({
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
         state.loading = false;
+        state.error = null;
         state.data = action.payload.items;
         // state.totalItems = action.payload.totalItems;
         state.totalItems = 50; // Google books API does not provide a consistent value for totalItems, so we hardcode it
@@ -54,6 +38,17 @@ export const booksSlice = createSlice({
       .addCase(fetchBooks.rejected, (state) => {
         state.loading = false;
         state.error = 'Failed to get books';
+      })
+      .addCase(saveBook.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(saveBook.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(saveBook.rejected, (state) => {
+        state.loading = false;
+        state.error = 'Failed to save book';
       });
   },
 });

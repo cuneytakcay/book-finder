@@ -6,11 +6,11 @@ import styles from './BookSearch.module.css';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
-  fetchBooks,
   selectTotalItems,
   selectBooksLoading,
   selectBooksError,
 } from './booksSlice';
+import { fetchBooks } from './bookActions';
 
 const BookSearch: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -50,7 +50,7 @@ const BookSearch: React.FC = () => {
   };
 
   const pagination =
-    totalItems > 0 ? (
+    totalItems > 0 && !loading && !error ? (
       <Pagination
         currentPage={currentPage}
         totalPages={pageCount}
