@@ -1,4 +1,4 @@
-export interface Book {
+export interface GoogleBook {
   id: string;
   volumeInfo: {
     title: string;
@@ -16,20 +16,22 @@ export interface Book {
   };
 }
 
+export interface AppBook {
+  authors?: string[];
+  bookId: string;
+  categories?: string[];
+  description?: string;
+  imgUrl?: string;
+  infoLink?: string;
+  subtitle?: string;
+  textSnippet?: string;
+  title: string;
+}
+
 export interface BookListProps {
-  books: Book[];
+  books: AppBook[];
 }
 
 export interface BookCardProps {
-  book: {
-    authors?: string[];
-    bookId: string;
-    categories?: string[];
-    description?: string;
-    imgUrl?: string;
-    infoLink?: string;
-    subtitle?: string;
-    textSnippet?: string;
-    title: string;
-  };
+  book: AppBook;
 }

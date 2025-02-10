@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../../app/store';
-import { Book } from '../../types/Book.type';
+import { AppBook, GoogleBook } from '../../types/Book.type';
 import { serverToClientBook } from '../../utils/bookFactory';
 
 // Define a type for the slice state
 export interface BooksState {
-  data: Book[];
+  data: AppBook[];
   totalItems: number;
   loading: boolean;
   error: string | null;
@@ -28,7 +28,9 @@ export const fetchBooks = createAsyncThunk(
       `https://www.googleapis.com/books/v1/volumes?q=${query}&orderBy=newest&maxResults=10&langRestrict=en&startIndex=${startIndex}`
     );
 
-    const items = res.data.items.map((item: Book) => serverToClientBook(item));
+    const items = res.data.items.map((item: GoogleBook) =>
+      serverToClientBook(item)
+    );
 
     return { items, totalItems: res.data.totalItems };
   }

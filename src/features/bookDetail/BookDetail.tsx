@@ -56,25 +56,23 @@ const BookDetail: React.FC = () => {
       ) : book ? (
         <div className={styles['book-detail']}>
           <button onClick={handleClick}>Go to Book Search</button>
-          <h1>{book.volumeInfo.title}</h1>
-          {book.volumeInfo.subtitle && <h2>{book.volumeInfo.subtitle}</h2>}
-          {book.volumeInfo.authors && (
+          <h1>{book.title}</h1>
+          {book.subtitle && <h2>{book.subtitle}</h2>}
+          {book.authors && (
             <p className={styles.authors}>
               <span style={{ fontWeight: 'bold' }}>Authors:</span>{' '}
-              {book.volumeInfo.authors?.join(', ')}
+              {book.authors?.join(', ')}
             </p>
           )}
           <div className={styles.content}>
             <div className={styles.imagebox}>
               <img
                 src={
-                  book.volumeInfo.imageLinks?.thumbnail ||
+                  book.imgUrl ||
                   'https://placehold.co/128x193/e2e8f0/1e293b?text=No+Cover+Available'
                 }
                 alt={
-                  book.volumeInfo.imageLinks?.thumbnail
-                    ? `Cover of ${book.volumeInfo.title}`
-                    : 'No cover available'
+                  book.imgUrl ? `Cover of ${book.title}` : 'No cover available'
                 }
                 width={128}
                 height={193}
@@ -83,15 +81,13 @@ const BookDetail: React.FC = () => {
             <div className={styles.info}>
               <div
                 dangerouslySetInnerHTML={{
-                  __html:
-                    book.volumeInfo.description ||
-                    '<p>No description available</p>',
+                  __html: book.description || '<p>No description available</p>',
                 }}
               />
-              {book.volumeInfo.categories && (
+              {book.categories && (
                 <p className={styles.categories}>
                   <span style={{ fontWeight: 'bold' }}>Categories:</span>{' '}
-                  {book.volumeInfo.categories?.join(', ')}
+                  {book.categories?.join(', ')}
                 </p>
               )}
               <a

@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../../app/store';
-import { Book } from '../../types/Book.type';
+import { AppBook } from '../../types/Book.type';
+import { serverToClientBook } from '../../utils/bookFactory';
 
 // Define a type for the slice state
 export interface BookDetailState {
-  data: Book | null;
+  data: AppBook | null;
   loading: boolean;
   error: string | null;
 }
@@ -25,7 +26,9 @@ export const fetchBookById = createAsyncThunk(
       `https://www.googleapis.com/books/v1/volumes/${id}`
     );
 
-    return res.data;
+    const book = serverToClientBook(res.data);
+
+    return book;
   }
 );
 

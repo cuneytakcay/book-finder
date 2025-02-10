@@ -1,6 +1,6 @@
-import { Book } from '../types/Book.type';
+import { GoogleBook } from '../types/Book.type';
 
-export const serverToClientBook = (book: Book) => {
+export const serverToClientBook = (book: GoogleBook) => {
   return {
     authors: book.volumeInfo.authors,
     bookId: book.id,
