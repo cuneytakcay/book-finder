@@ -33,44 +33,39 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
       <div className={styles.imagebox}>
         <img
           src={
-            book.volumeInfo.imageLinks?.thumbnail ||
+            book.imgUrl ||
             'https://placehold.co/128x193/e2e8f0/1e293b?text=No+Cover+Available'
           }
-          alt={
-            book.volumeInfo.imageLinks?.thumbnail
-              ? `Cover of ${book.volumeInfo.title}`
-              : 'No cover available'
-          }
+          alt={book.imgUrl ? `Cover of ${book.title}` : 'No cover available'}
           width={128}
           height={193}
         />
       </div>
       <div className={styles.info}>
-        <h3>{book.volumeInfo.title}</h3>
+        <h3>{book.title}</h3>
         <p className={styles.author}>
-          By{' '}
-          {book.volumeInfo.authors
-            ? book.volumeInfo.authors.join(', ')
-            : 'Unknown Author'}
+          By {book.authors ? book.authors.join(', ') : 'Unknown Author'}
         </p>
         <p
           className={styles.description}
           dangerouslySetInnerHTML={{
-            __html: book.searchInfo?.textSnippet || 'No description available',
+            __html: book.textSnippet || 'No description available',
           }}
         />
-        <Link className={styles.readMore} to={`/book/${book.id}`}>
+        <Link className={styles.readMore} to={`/book/${book.bookId}`}>
           Read More <FontAwesomeIcon icon={faArrowRight} />
         </Link>
       </div>
-      <select
-        className={styles.select}
-        onChange={(e) => setSelectedOption(e.target.value)}
-      >
-        <option value=''>--Select an option--</option>
-        <option value='have-read'>Have read</option>
-        <option value='want-to-read'>Want to read</option>
-      </select>
+      {user && (
+        <select
+          className={styles.select}
+          onChange={(e) => setSelectedOption(e.target.value)}
+        >
+          <option value=''>--Select an option--</option>
+          <option value='have-read'>Have read</option>
+          <option value='want-to-read'>Want to read</option>
+        </select>
+      )}
     </div>
   );
 };

@@ -21,5 +21,15 @@ export interface BookListProps {
 }
 
 export interface BookCardProps {
-  book: Book;
+  book: {
+    authors?: string[];
+    bookId: string;
+    categories?: string[];
+    description?: string;
+    imgUrl?: string;
+    infoLink?: string;
+    subtitle?: string;
+    textSnippet?: string;
+    title: string;
+  };
 }
