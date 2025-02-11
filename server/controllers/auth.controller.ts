@@ -55,15 +55,21 @@ export const loginUser = async (req: Request, res: Response) => {
 // Update user information
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const { library } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ message: 'User not found' });
   }
 
+  // Map the library array strings to ObjectIds
+  const updatedLibrary = library.map(
+    (item: string) => new mongoose.Types.ObjectId(item)
+  );
+
   try {
     const user = await User.findOneAndUpdate(
       { _id: id },
-      { ...req.body },
+      { ...req.body, library: updatedLibrary },
       { new: true }
     );
 
