@@ -1,4 +1,5 @@
 export interface IAuth {
+  token: string | null;
   user: IAuthanticatedUser | null;
   isLoading: boolean;
   error: string | null;

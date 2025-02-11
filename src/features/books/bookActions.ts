@@ -25,7 +25,7 @@ export const saveBook = createAsyncThunk(
   'books/saveBook',
   async (book: AppBook, thunkAPI) => {
     const state = thunkAPI.getState() as RootState;
-    const token = state.auth.user?.token;
+    const token = state.auth.token;
 
     try {
       const res = await axios.post('/api/books', book, {
@@ -54,7 +54,7 @@ export const addBookToLibrary = createAsyncThunk(
     thunkAPI
   ) => {
     const state = thunkAPI.getState() as RootState;
-    const token = state.auth.user?.token;
+    const token = state.auth.token;
 
     try {
       const res = await axios.post(

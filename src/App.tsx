@@ -10,7 +10,7 @@ import RegisterForm from './features/auth/RegisterForm';
 import './styles.css';
 
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import { setUser } from './features/auth/authSlice';
+import { setUserAndToken } from './features/auth/authSlice';
 import {
   selectModalState,
   selectModalFormType,
@@ -23,11 +23,12 @@ function App() {
   const modalFormType = useAppSelector(selectModalFormType);
 
   useEffect(() => {
-    // Load user from local storage
+    // Load user and token from local storage
     const user = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
 
     // Dispatch an action to set the user in the store
-    if (user) dispatch(setUser(JSON.parse(user)));
+    if (user) dispatch(setUserAndToken({ user: JSON.parse(user), token }));
   }, [dispatch]);
 
   return (

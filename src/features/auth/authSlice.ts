@@ -4,6 +4,7 @@ import { IAuth } from '../../types/Auth.type';
 import { registerUser, loginUser } from './authActions';
 
 const initialState: IAuth = {
+  token: null,
   user: null,
   isLoading: false,
   error: null,
@@ -21,8 +22,9 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.error = null;
     },
-    setUser: (state, action) => {
-      state.user = action.payload;
+    setUserAndToken: (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
   },
   extraReducers: (builder) => {
@@ -32,7 +34,8 @@ export const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -43,7 +46,8 @@ export const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -54,8 +58,9 @@ export const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { clearError, logoutUser, setUser } = authSlice.actions;
+export const { clearError, logoutUser, setUserAndToken } = authSlice.actions;
 
+export const selectToken = (state: RootState) => state.auth.token;
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectIsLoading = (state: RootState) => state.auth.isLoading;
 export const selectError = (state: RootState) => state.auth.error;

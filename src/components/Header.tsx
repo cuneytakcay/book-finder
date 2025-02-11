@@ -22,7 +22,7 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <h1>Book Finder</h1>
       <div className={styles.nav}>
-        {user && <p>{user?.email}</p>}
+        {user && <p>{user.email}</p>}
         <nav>
           {user ? (
             <button className={styles['nav-link']} onClick={handleLogout}>

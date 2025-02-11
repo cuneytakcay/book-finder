@@ -15,9 +15,15 @@ export const registerUser = async (req: Request, res: Response) => {
     const user = await User.register(req.body);
     const token = createToken(user._id as string);
 
-    res
-      .status(201)
-      .json({ message: 'User created successfully', email: user.email, token });
+    // Hide password from response by destructuring the user object
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userData } = user.toObject();
+
+    res.status(201).json({
+      message: 'User created successfully',
+      user: userData,
+      token,
+    });
   } catch (error) {
     const message =
       error.code === 11000 ? 'User already exists' : error.message;
@@ -32,9 +38,13 @@ export const loginUser = async (req: Request, res: Response) => {
     const user = await User.login(req.body);
     const token = createToken(user._id as string);
 
+    // Hide password from response by destructuring the user object
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userData } = user.toObject();
+
     res.status(200).json({
       message: 'Token generated successfully',
-      email: user.email,
+      user: userData,
       token,
     });
   } catch (error) {
