@@ -13,7 +13,10 @@ const Header: React.FC = () => {
     dispatch(openModal(formType));
   };
 
-  const handleLogout = () => dispatch(logoutUser());
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    localStorage.removeItem('user');
+  };
 
   return (
     <header className={styles.header}>
