@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import { AppBook } from '../../types/Book.type';
-import { fetchBooks, saveBook, addBookToLibrary } from './bookActions';
+import { fetchBooks, saveBook } from './bookActions';
 
 // Define a type for the slice state
 export interface BooksState {
@@ -49,17 +49,6 @@ export const booksSlice = createSlice({
       .addCase(saveBook.rejected, (state) => {
         state.loading = false;
         state.error = 'Failed to save book';
-      })
-      .addCase(addBookToLibrary.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(addBookToLibrary.fulfilled, (state) => {
-        state.loading = false;
-        state.error = null;
-      })
-      .addCase(addBookToLibrary.rejected, (state) => {
-        state.loading = false;
-        state.error = 'Failed to add book to library';
       });
   },
 });

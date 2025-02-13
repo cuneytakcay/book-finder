@@ -3,6 +3,7 @@ import authReducer from '../features/auth/authSlice';
 import booksReducer from '../features/books/booksSlice';
 import bookDetailReducer from '../features/bookDetail/bookDetailSlice';
 import modalReducer from '../features/modal/modalSlice';
+import libraryReducer from '../features/library/librarySlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     books: booksReducer,
     bookDetail: bookDetailReducer,
     modal: modalReducer,
+    library: libraryReducer,
   },
 });
 

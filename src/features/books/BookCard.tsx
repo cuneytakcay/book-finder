@@ -9,11 +9,14 @@ import styles from './BookCard.module.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectUser } from '../auth/authSlice';
 import { openModal } from '../modal/modalSlice';
-import { saveBook, addBookToLibrary } from './bookActions';
+import { saveBook } from './bookActions';
+import { selectLibraryId } from '../library/librarySlice';
+import { addBookToLibrary } from '../library/libraryActions';
 
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
+  const libraryId = useAppSelector(selectLibraryId);
 
   const [selectedOption, setSelectedOption] = useState('');
 
@@ -27,6 +30,8 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           await dispatch(
             addBookToLibrary({ bookId: book.bookId, selectedOption })
           );
+          // Temporary alert to show that the library id is stored
+          alert(libraryId);
         };
 
         handleBookActions();
@@ -34,7 +39,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         dispatch(openModal('login'));
       }
     }
-  }, [selectedOption, dispatch, user, book]);
+  }, [selectedOption, dispatch, user, book, libraryId]);
 
   return (
     <div className={styles.card}>
