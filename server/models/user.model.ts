@@ -10,7 +10,7 @@ const userSchema = new Schema<IUser>(
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    library: [{ type: Schema.Types.ObjectId, ref: 'LibraryItem' }],
+    library: [{ bookId: { type: String }, selectedOption: { type: String } }],
   },
   {
     timestamps: true,

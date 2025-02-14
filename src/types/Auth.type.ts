@@ -19,7 +19,14 @@ export interface ILoginUser {
 }
 
 export interface IAuthanticatedUser {
-  token: string;
-  message: string;
+  _id: string;
+  firstName: string;
+  lastName: string;
   email: string;
+  library: ILibraryItem[];
+}
+
+export interface ILibraryItem {
+  bookId: string;
+  selectedOption: string;
 }

@@ -1,4 +1,4 @@
-import { Document, Model, Types } from 'mongoose';
+import { Document, Model } from 'mongoose';
 
 // Define an interface for the User document
 export interface IUser extends Document {
@@ -6,7 +6,7 @@ export interface IUser extends Document {
   lastName: string;
   email: string;
   password: string;
-  library: Types.ObjectId[];
+  library: { bookId: string; selectedOption: string }[] | [];
 }
 
 // Define an interface for the User model

@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IRegisterUser, ILoginUser } from '../../types/Auth.type';
+import type { RootState } from '../../app/store';
+import { IRegisterUser, ILoginUser, ILibraryItem } from '../../types/Auth.type';
 
 export const registerUser = createAsyncThunk(
   'auth/register',
@@ -42,6 +43,39 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem('user', JSON.stringify(res.data.user));
       // Set the token in localStorage
       localStorage.setItem('token', res.data.token);
+
+      return res.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data.message;
+        return thunkAPI.rejectWithValue(errorMessage);
+      }
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+// Async thunk for updating user library
+export const updateUserLibrary = createAsyncThunk(
+  'auth/updateUserLibrary',
+  async (
+    { userId, library }: { userId: string; library: ILibraryItem[] },
+    thunkAPI
+  ) => {
+    const state = thunkAPI.getState() as RootState;
+    const token = state.auth.token;
+
+    try {
+      const res = await axios.patch(
+        `/api/auth/user/${userId}`,
+        { library },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       return res.data;
     } catch (error) {

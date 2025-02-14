@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 import { IAuth } from '../../types/Auth.type';
-import { registerUser, loginUser } from './authActions';
+import { registerUser, loginUser, updateUserLibrary } from './authActions';
 
 const initialState: IAuth = {
   token: null,
@@ -50,6 +50,17 @@ export const authSlice = createSlice({
         state.user = action.payload.user;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(updateUserLibrary.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUserLibrary.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(updateUserLibrary.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
       });
