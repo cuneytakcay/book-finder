@@ -1,3 +1,7 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import styles from './Header.module.css';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -7,6 +11,8 @@ import { clearError, logoutUser, selectUser } from '../features/auth/authSlice';
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
+
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handleModal = (formType: 'login' | 'register') => {
     dispatch(clearError());
@@ -22,8 +28,26 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <h1>Book Finder</h1>
       <div className={styles.nav}>
-        {user && <p>{user.email}</p>}
+        {user && (
+          <button
+            onClick={() => setDropdownVisible(!isDropdownVisible)}
+            className={styles['nav-link']}
+          >
+            <FontAwesomeIcon icon={faUser} />
+          </button>
+        )}
         <nav>
+          {user && isDropdownVisible && (
+            <div className={styles.dropdown}>
+              <Link to='/mybooks' className='solid-btn'>
+                Go to my books
+              </Link>
+              <p>
+                {user.firstName} {user.lastName}
+              </p>
+              <p>{user.email}</p>
+            </div>
+          )}
           {user ? (
             <button className={styles['nav-link']} onClick={handleLogout}>
               Logout

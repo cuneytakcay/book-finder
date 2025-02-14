@@ -5,6 +5,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .header h1 {
@@ -42,4 +45,38 @@
   background-color: #fcfcfc;
   color: #403c63;
   transform: scale(1.05);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #403c63;
+  color: #fcfcfc;
+  padding: 30px 10px;
+  border-top: 5px solid #fcfcfc;
+  border-radius: 0 0 0 4px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown a {
+  display: inline-block;
+  padding: 5px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #fcfcfc;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease-in-out;
+  color: #fcfcfc;
+}
+
+.dropdown a:hover {
+  background-color: #fcfcfc;
+  color: #403c63;
+}
+
+.dropdown p {
+  letter-spacing: 2px;
 }
