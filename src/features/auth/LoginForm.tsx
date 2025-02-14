@@ -9,7 +9,12 @@ import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Redux toolkit
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectIsLoading, selectError, selectUser } from './authSlice';
+import {
+  selectIsLoading,
+  selectError,
+  selectUser,
+  clearError,
+} from './authSlice';
 import { loginUser } from './authActions';
 import { closeModal, openModal } from '../modal/modalSlice';
 
@@ -54,6 +59,11 @@ const Login: React.FC = () => {
   }, [watch, user, navigate, dispatch]);
 
   const onSubmit = (data: ILoginUser) => dispatch(loginUser(data));
+
+  const handleModalChange = () => {
+    dispatch(openModal('register'));
+    dispatch(clearError());
+  };
 
   return (
     <>
@@ -116,7 +126,7 @@ const Login: React.FC = () => {
               <button
                 type='button'
                 className='link-btn'
-                onClick={() => dispatch(openModal('register'))}
+                onClick={handleModalChange}
               >
                 Register
               </button>
