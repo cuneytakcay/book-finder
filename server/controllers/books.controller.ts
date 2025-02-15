@@ -21,3 +21,16 @@ export const createBook = async (req: Request, res: Response) => {
     res.status(500).json(error.message);
   }
 };
+
+// Get books by an array of bookIds
+export const getBooksByIds = async (req: Request, res: Response) => {
+  try {
+    const { bookIds } = req.body;
+
+    const books = await Book.find({ bookId: { $in: bookIds } });
+
+    res.status(200).json({ books });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};

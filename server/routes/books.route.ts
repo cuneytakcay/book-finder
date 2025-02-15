@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import verifyToken from '../middleware/verifyToken';
-import { createBook } from '../controllers/books.controller';
+import { createBook, getBooksByIds } from '../controllers/books.controller';
 
 const router = express.Router();
 
@@ -8,6 +8,15 @@ const router = express.Router();
 router.post('/', verifyToken, async (req: Request, res: Response) => {
   try {
     await createBook(req, res);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// Get books by an array of bookIds
+router.get('/', verifyToken, async (req: Request, res: Response) => {
+  try {
+    await getBooksByIds(req, res);
   } catch (error) {
     res.status(500).json(error);
   }
