@@ -14,7 +14,7 @@ router.post('/', verifyToken, async (req: Request, res: Response) => {
 });
 
 // Get books by an array of bookIds
-router.get('/', verifyToken, async (req: Request, res: Response) => {
+router.get('/:bookIds', verifyToken, async (req: Request, res: Response) => {
   try {
     await getBooksByIds(req, res);
   } catch (error) {

@@ -25,9 +25,10 @@ export const createBook = async (req: Request, res: Response) => {
 // Get books by an array of bookIds
 export const getBooksByIds = async (req: Request, res: Response) => {
   try {
-    const { bookIds } = req.body;
+    const { bookIds } = req.params;
+    const idArray = bookIds.split(',');
 
-    const books = await Book.find({ bookId: { $in: bookIds } });
+    const books = await Book.find({ bookId: { $in: idArray } });
 
     res.status(200).json({ books });
   } catch (error) {
