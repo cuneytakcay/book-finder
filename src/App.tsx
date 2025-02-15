@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import Header from './components/Header';
 import BookSearch from './features/books/BookSearch';
 import BookDetail from './features/bookDetail/BookDetail';
+import MyBooks from './features/user/MyBooks';
 import Footer from './components/Footer';
 import ModalContainer from './features/modal/ModalContainer';
 import LoginForm from './features/auth/LoginForm';
@@ -39,6 +40,7 @@ function App() {
           <Routes>
             <Route path='/' element={<BookSearch />} />
             <Route path='/book/:id' element={<BookDetail />} />
+            <Route path='/mybooks' element={<MyBooks />} />
           </Routes>
         </div>
       </main>

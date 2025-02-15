@@ -33,18 +33,26 @@
 .nav-link {
   background-color: #403c63;
   color: #fcfcfc;
-  padding: 10px 15px;
+  padding: 0 15px;
+  height: 40px;
   border: 2px solid #fcfcfc;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
   transition: background-color 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-link:hover {
   background-color: #fcfcfc;
   color: #403c63;
   transform: scale(1.05);
+}
+
+.icon-btn {
+  width: 48px;
 }
 
 .dropdown {
@@ -60,23 +68,28 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-.dropdown a {
-  display: inline-block;
+.ddlink {
+  display: block;
   padding: 5px 15px;
-  margin-bottom: 20px;
+  margin-top: 20px;
   border: 1px solid #fcfcfc;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
+  text-transform: none;
   transition: background-color 0.3s ease-in-out;
+  font-size: 1rem;
+  font-weight: normal;
   color: #fcfcfc;
+  letter-spacing: 1px;
+  width: 100%;
 }
 
-.dropdown a:hover {
+.ddlink:hover {
   background-color: #fcfcfc;
   color: #403c63;
 }
 
 .dropdown p {
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }

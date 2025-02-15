@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faHome } from '@fortawesome/free-solid-svg-icons';
 import styles from './Header.module.css';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
@@ -22,16 +22,20 @@ const Header: React.FC = () => {
   const handleLogout = () => {
     dispatch(logoutUser());
     localStorage.removeItem('user');
+    setDropdownVisible(false);
   };
 
   return (
     <header className={styles.header}>
       <h1>Book Finder</h1>
       <div className={styles.nav}>
+        <Link to='/' className={styles['nav-link'] + ' ' + styles['icon-btn']}>
+          <FontAwesomeIcon icon={faHome} />
+        </Link>
         {user && (
           <button
             onClick={() => setDropdownVisible(!isDropdownVisible)}
-            className={styles['nav-link']}
+            className={styles['nav-link'] + ' ' + styles['icon-btn']}
           >
             <FontAwesomeIcon icon={faUser} />
           </button>
@@ -39,20 +43,19 @@ const Header: React.FC = () => {
         <nav>
           {user && isDropdownVisible && (
             <div className={styles.dropdown}>
-              <Link to='/mybooks' className='solid-btn'>
-                Go to my books
-              </Link>
               <p>
                 {user.firstName} {user.lastName}
               </p>
               <p>{user.email}</p>
+              <Link to='/mybooks' className={styles.ddlink}>
+                Go to my books
+              </Link>
+              <button className={styles.ddlink} onClick={handleLogout}>
+                Logout
+              </button>
             </div>
           )}
-          {user ? (
-            <button className={styles['nav-link']} onClick={handleLogout}>
-              Logout
-            </button>
-          ) : (
+          {!user && (
             <>
               <button
                 className={styles['nav-link']}
