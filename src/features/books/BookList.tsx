@@ -1,4 +1,4 @@
-import BookCard from './BookCard';
+import BookCard from '../../components/BookCard';
 import styles from './BookList.module.css';
 
 import { useAppSelector } from '../../app/hooks';
@@ -10,7 +10,7 @@ const BookList: React.FC = () => {
   return (
     <div className={styles.bookList}>
       {books?.map((book, index) => (
-        <BookCard key={`${book.id}-${index}`} book={book} />
+        <BookCard key={`${book.bookId}-${index}`} book={book} />
       ))}
     </div>
   );
