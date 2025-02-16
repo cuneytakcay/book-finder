@@ -47,6 +47,32 @@ const BookCard: React.FC<{ book: AppBook; userLibrary?: ILibraryItem[] }> = ({
     }
   }, [userLibrary, book.bookId]);
 
+  const removeFromLibrary = () => {
+    if (user) {
+      dispatch(
+        updateUserLibrary({
+          userId: user._id,
+          library: user.library.filter((lib) => lib.bookId !== book.bookId),
+        })
+      );
+    }
+  };
+
+  const updateToHaveRead = () => {
+    if (user) {
+      dispatch(
+        updateUserLibrary({
+          userId: user._id,
+          library: user.library.map((lib) =>
+            lib.bookId === book.bookId
+              ? { ...lib, selectedOption: 'have-read' }
+              : lib
+          ),
+        })
+      );
+    }
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.imagebox}>
@@ -89,9 +115,10 @@ const BookCard: React.FC<{ book: AppBook; userLibrary?: ILibraryItem[] }> = ({
           ) : savedOption === 'want-to-read' ? (
             <>
               <p className={styles.status}>Want to read this book</p>
-              <button onClick={() => setSelectedOption('')}>
+              <button onClick={removeFromLibrary}>
                 Remove book from library
               </button>
+              <button onClick={updateToHaveRead}>Have read</button>
             </>
           ) : (
             <p className={styles.status}>Have read this book</p>
