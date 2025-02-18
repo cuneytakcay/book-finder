@@ -26,15 +26,6 @@ router.post('/user/login', async (req: Request, res: Response) => {
   }
 });
 
-// Protected route to get user information
-router.get('/user', verifyToken, async (req: Request, res: Response) => {
-  try {
-    res.status(200).json(req.user);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
-
 // Protected route to update user information
 router.patch('/user/:id', verifyToken, async (req: Request, res: Response) => {
   try {
