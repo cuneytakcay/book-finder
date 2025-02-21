@@ -1,0 +1,29 @@
+{
+  "name": "book-finder-server",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "tsx --watch index.ts",
+    "build": "tsx",
+    "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.30.0",
+    "@typescript-eslint/parser": "^4.30.0",
+    "@types/express": "^5.0.0",
+    "eslint": "^7.32.0",
+    "tsx": "^4.19.2",
+    "typescript": "^4.4.4"
+  }
+}
