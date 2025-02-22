@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "ESNext",
+    "outDir": "./dist",
+    "rootDir": ".",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "typeRoots": ["./node_modules/@types", "./types"]
+  },
+  "include": ["./**/*"],
+  "exclude": ["./node_modules", "./dist", "fix-imports.js"]
+}

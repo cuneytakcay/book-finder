@@ -4,12 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\""
+    "start": "concurrently \"cd api && npm run dev\" \"cd client && npm run dev\""
   },
-  "dependencies": {},
   "devDependencies": {
-    "@types/node": "^22.10.10",
-    "concurrently": "^9.1.2",
-    "tsx": "^4.19.2"
+    "concurrently": "^9.1.2"
   }
 }
