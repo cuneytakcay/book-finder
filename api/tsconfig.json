@@ -13,5 +13,5 @@
 		"typeRoots": ["./node_modules/@types", "./types"]
 	},
 	"include": ["./**/*"],
-	"exclude": ["./node_modules", "./dist", "fix-imports.js", "client"]
+	"exclude": ["./node_modules", "./dist", "fix-imports.js"]
 }
