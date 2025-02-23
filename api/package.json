@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "dev": "tsx --watch index.ts",
-    "build": "tsc && node ./fix-imports.js",
+    "build": "npm install --prefix ./client && npm run build --prefix ./client && npm install && tsc && node ./fix-imports.js",
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
