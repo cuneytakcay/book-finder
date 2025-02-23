@@ -14,6 +14,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@reduxjs/toolkit": "^2.5.1",
     "axios": "^1.7.9",
+    "book-finder-server": "file:..",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-form-hook": "^0.0.1",
