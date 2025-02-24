@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../../app/store';
+import { apiBaseUrl } from '../../utils/apiUtils';
 
 // Async thunk for adding a book id to the user library
 export const addBookToLibrary = createAsyncThunk(
@@ -14,7 +15,7 @@ export const addBookToLibrary = createAsyncThunk(
 
     try {
       const res = await axios.post(
-        '/api/library',
+        `${apiBaseUrl}/auth/library`,
         { bookId, selectedOption },
         {
           headers: {

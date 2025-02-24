@@ -2,16 +2,21 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../../app/store';
 import { IRegisterUser, ILoginUser, ILibraryItem } from '../../types/Auth.type';
+import { apiBaseUrl } from '../../utils/apiUtils';
 
 export const registerUser = createAsyncThunk(
   'auth/register',
   async (userData: IRegisterUser, thunkAPI) => {
     try {
-      const res = await axios.post('/api/auth/user/register', userData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await axios.post(
+        `${apiBaseUrl}/auth/user/register`,
+        userData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       // Set the user in localStorage
       localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -33,11 +38,15 @@ export const loginUser = createAsyncThunk(
   'auth/login',
   async (credentials: ILoginUser, thunkAPI) => {
     try {
-      const res = await axios.post('/api/auth/user/login', credentials, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const res = await axios.post(
+        `${apiBaseUrl}/auth/user/login`,
+        credentials,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       // Set the user in localStorage
       localStorage.setItem('user', JSON.stringify(res.data.user));
@@ -67,7 +76,7 @@ export const updateUserLibrary = createAsyncThunk(
 
     try {
       const res = await axios.patch(
-        `/api/auth/user/${userId}`,
+        `${apiBaseUrl}/api/auth/user/${userId}`,
         { library },
         {
           headers: {

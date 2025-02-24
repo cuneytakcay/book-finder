@@ -3,6 +3,7 @@ import axios from 'axios';
 import type { RootState } from '../../app/store';
 import { AppBook, GoogleBook } from '../../types/Book.type';
 import { serverToClientBook } from '../../utils/bookFactory';
+import { apiBaseUrl } from '../../utils/apiUtils';
 
 // Async thunk for fetching books with query
 export const fetchBooks = createAsyncThunk(
@@ -28,7 +29,7 @@ export const saveBook = createAsyncThunk(
     const token = state.auth.token;
 
     try {
-      const res = await axios.post('/api/books', book, {
+      const res = await axios.post(`${apiBaseUrl}/books`, book, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,

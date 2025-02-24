@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../../app/store';
+import { apiBaseUrl } from '../../utils/apiUtils';
 
 // Async thunk for getting books by an array of bookIds
 export const getBooksByIds = createAsyncThunk(
@@ -10,7 +11,7 @@ export const getBooksByIds = createAsyncThunk(
     const token = state.auth.token;
 
     try {
-      const res = await axios.get(`/api/books/${bookIds.join(',')}`, {
+      const res = await axios.get(`${apiBaseUrl}/books/${bookIds.join(',')}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
