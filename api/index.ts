@@ -17,7 +17,10 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
 
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://book-finder-xu3a.onrender.com/'],
+  origin: [
+    'http://localhost:5173',
+    'https://book-finder-app-gumq.onrender.com',
+  ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,
