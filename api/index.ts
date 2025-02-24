@@ -16,15 +16,16 @@ const app: Express = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
 
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://book-finder-xu3a.onrender.com/'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
 // Middleware for JSON parser and cors
 app.use(express.json());
-app.use(
-  cors({
-    origin: ['http://localhost:5173', 'https://book-finder-xu3a.onrender.com/'],
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 
 // Set up route paths
 app.use('/api/auth', authRoutes);
