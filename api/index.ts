@@ -25,12 +25,10 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 
-// Middleware for JSON parser and cors
-app.use(express.json());
+// Middlewares
 app.use(cors(corsOptions));
-
-// Middleware for handling options requests
 app.options('*', cors(corsOptions));
+app.use(express.json());
 
 // Set up route paths
 app.use('/api/auth', authRoutes);
