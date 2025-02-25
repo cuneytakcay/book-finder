@@ -46,10 +46,10 @@ To get started with Book Finder, follow these steps:
    npm install
    ```
 
-4. Start the development server:
+4. Start the development app:
 
    ```bash
-   npm run dev
+   npm start
    ```
 
 5. Open your browser and go to `http://localhost:5173` to view the app.

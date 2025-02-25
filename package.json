@@ -1,0 +1,12 @@
+{
+  "name": "book-finder",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "concurrently \"cd api && npm install && npm run dev\" \"cd client && npm install && npm run dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
