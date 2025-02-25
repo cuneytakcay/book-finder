@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import BookSaveButtons from '../../components/BookSaveButtons';
 import Spinner from '../../components/Spinner';
 import styles from './BookDetail.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +14,6 @@ import {
   selectBookError,
 } from './bookDetailSlice';
 import { selectUser } from '../auth/authSlice';
-import { openModal } from '../modal/modalSlice';
 
 const BookDetail: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,8 +21,6 @@ const BookDetail: React.FC = () => {
   const loading = useAppSelector(selectBookLoading);
   const error = useAppSelector(selectBookError);
   const user = useAppSelector(selectUser);
-
-  const [selectedOption, setSelectedOption] = useState('');
 
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -33,29 +31,13 @@ const BookDetail: React.FC = () => {
     }
   }, [dispatch, id]);
 
-  useEffect(() => {
-    if (selectedOption && selectedOption.length > 0) {
-      if (user) {
-        console.log(user);
-        // Function to save the book to the books collection
-        // Function to save the book id to the user's books collection
-      } else {
-        dispatch(openModal('login'));
-      }
-    }
-  }, [dispatch, selectedOption, user]);
-
-  const handleClick = () => {
-    navigate('/');
-  };
-
   return (
     <div>
       {loading ? (
         <Spinner spinnerText='Loading selected book...' />
       ) : book ? (
         <div className={styles['book-detail']}>
-          <button onClick={handleClick}>Go to Book Search</button>
+          <button onClick={() => navigate('/')}>Go to Book Search</button>
           <h1>{book.title}</h1>
           {book.subtitle && <h2>{book.subtitle}</h2>}
           {book.authors && (
@@ -99,14 +81,9 @@ const BookDetail: React.FC = () => {
                 <FontAwesomeIcon icon={faArrowRight} />
               </a>
             </div>
-            <select
-              className={styles.select}
-              onChange={(e) => setSelectedOption(e.target.value)}
-            >
-              <option value=''>--Select an option--</option>
-              <option value='have-read'>Have read</option>
-              <option value='want-to-read'>Want to read</option>
-            </select>
+            {user && (
+              <BookSaveButtons book={book} userLibrary={user?.library || []} />
+            )}
           </div>
         </div>
       ) : (
