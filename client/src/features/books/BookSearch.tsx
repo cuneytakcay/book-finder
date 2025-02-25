@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import BookList from './BookList';
 import Pagination from '../pagination/Pagination';
 import Spinner from '../../components/Spinner';
@@ -21,6 +21,7 @@ const BookSearch: React.FC = () => {
   const [query, setQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [showPagination, setShowPagination] = useState(false);
 
   const pageCount = Math.ceil(totalItems / 10); // Assuming 10 books per page
 
@@ -49,15 +50,9 @@ const BookSearch: React.FC = () => {
     }
   };
 
-  const pagination =
-    totalItems > 0 && !loading && !error ? (
-      <Pagination
-        currentPage={currentPage}
-        totalPages={pageCount}
-        onNext={renderNextPage}
-        onPrevious={renderPreviousPage}
-      />
-    ) : null;
+  useEffect(() => {
+    setShowPagination(totalItems > 0 && !loading && !error);
+  }, [totalItems, loading, error]);
 
   return (
     <div>
@@ -88,7 +83,14 @@ const BookSearch: React.FC = () => {
           )}
         </>
       )}
-      {pagination}
+      {showPagination && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={pageCount}
+          onNext={renderNextPage}
+          onPrevious={renderPreviousPage}
+        />
+      )}
     </div>
   );
 };
