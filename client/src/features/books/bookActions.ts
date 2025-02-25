@@ -21,6 +21,27 @@ export const fetchBooks = createAsyncThunk(
   }
 );
 
+// Async thunk for fetching 20 books for the page load
+export const fetchInitialBooks = createAsyncThunk(
+  'books/fetchInitialBooks',
+  async () => {
+    try {
+      const res = await axios.get(
+        'https://www.googleapis.com/books/v1/volumes?q=technology&orderBy=newest&maxResults=18&langRestrict=en'
+      );
+
+      const items = res.data.items.map((item: GoogleBook) =>
+        serverToClientBook(item)
+      );
+
+      return { items };
+    } catch (error) {
+      console.error('Error fetching books:', error);
+      throw error;
+    }
+  }
+);
+
 // Async thunk for saving a book to the collection
 export const saveBook = createAsyncThunk(
   'books/saveBook',

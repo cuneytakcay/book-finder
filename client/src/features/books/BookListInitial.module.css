@@ -1,0 +1,20 @@
+.bookList {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 50px auto;
+  padding: 0;
+  max-width: 900px;
+}
+
+.imagebox {
+  flex: 1 1 128px;
+  max-width: 128px;
+}
+
+.imagebox img {
+  width: 100%;
+  height: auto;
+}
