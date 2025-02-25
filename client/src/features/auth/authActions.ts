@@ -76,7 +76,7 @@ export const updateUserLibrary = createAsyncThunk(
 
     try {
       const res = await axios.patch(
-        `${apiBaseUrl}/api/auth/user/${userId}`,
+        `${apiBaseUrl}/auth/user/${userId}`,
         { library },
         {
           headers: {

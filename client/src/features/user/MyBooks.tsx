@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import BookCard from '../../components/BookCard';
+import BookSaveButtons from '../../components/BookSaveButtons';
 import Spinner from '../../components/Spinner';
 import styles from './MyBooks.module.css';
 
@@ -36,11 +37,18 @@ const MyBooks: React.FC = () => {
       ) : (
         <div className={styles.bookList}>
           {books?.map((book, index) => (
-            <BookCard
+            <div
+              className={styles['card-wrapper']}
               key={`${book.bookId}-${index}`}
-              book={book}
-              userLibrary={user?.library || []}
-            />
+            >
+              <BookCard book={book} />
+              {user && (
+                <BookSaveButtons
+                  book={book}
+                  userLibrary={user?.library || []}
+                />
+              )}
+            </div>
           ))}
         </div>
       )}

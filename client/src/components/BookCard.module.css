@@ -49,36 +49,3 @@
 .readMore:hover {
   text-decoration: underline;
 }
-
-.select {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.select button {
-  background-color: #fcfcfc;
-  color: #403c63;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 0.75em;
-  text-transform: lowercase;
-  letter-spacing: normal;
-  transition: all 0.3s ease;
-}
-
-.select button:hover {
-  background-color: #201e31;
-  color: #fcfcfc;
-}
-
-.status {
-  font-size: 0.85em;
-  font-weight: 500;
-  font-style: italic;
-  margin: 0;
-}

@@ -4,7 +4,7 @@ import styles from './BookListInitial.module.css';
 import { useAppSelector } from '../../app/hooks';
 import { selectInitialBooks } from './booksSlice';
 
-const BookList: React.FC = () => {
+const BookListInitial: React.FC = () => {
   const books = useAppSelector(selectInitialBooks);
 
   return (
@@ -30,4 +30,4 @@ const BookList: React.FC = () => {
   );
 };
 
-export default BookList;
+export default BookListInitial;
