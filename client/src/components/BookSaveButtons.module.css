@@ -17,6 +17,7 @@
   text-transform: lowercase;
   letter-spacing: normal;
   transition: all 0.3s ease;
+  margin: 0 !important;
 }
 
 .select button:hover {

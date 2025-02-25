@@ -63,7 +63,6 @@ export const booksSlice = createSlice({
       })
       .addCase(saveBook.rejected, (state) => {
         state.loading = false;
-        state.error = 'Failed to save book';
       });
   },
 });
