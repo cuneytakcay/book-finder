@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import BookList from './BookList';
+import BookListInitial from './BookListInitial';
 import Pagination from '../pagination/Pagination';
 import Spinner from '../../components/Spinner';
 import styles from './BookSearch.module.css';
@@ -10,7 +11,7 @@ import {
   selectBooksLoading,
   selectBooksError,
 } from './booksSlice';
-import { fetchBooks } from './bookActions';
+import { fetchBooks, fetchInitialBooks } from './bookActions';
 
 const BookSearch: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,11 @@ const BookSearch: React.FC = () => {
   const [showPagination, setShowPagination] = useState(false);
 
   const pageCount = Math.ceil(totalItems / 10); // Assuming 10 books per page
+
+  // Fetch initial books at the page load
+  useEffect(() => {
+    dispatch(fetchInitialBooks());
+  }, [dispatch]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,9 +81,12 @@ const BookSearch: React.FC = () => {
       ) : (
         <>
           {isInitialRender ? (
-            <p className={styles.info}>
-              Enter a keyword and click search button to start
-            </p>
+            <>
+              <p className={styles.info}>
+                Enter a keyword and click search button to start
+              </p>
+              <BookListInitial />
+            </>
           ) : (
             <BookList />
           )}
