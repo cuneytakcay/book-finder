@@ -14,6 +14,10 @@ Book Finder is a web application that allows users to search for books using the
 - Register to create an account.
 - Login to save, update, and delete books to/from a user's account.
 
+## Demo
+
+You can view a live demo of the Book Finder application at <a href="https://book-finder-app-gumq.onrender.com/" target="_blank">Book Finder Demo</a>.
+
 ## Technologies Used
 
 ### Frontend
