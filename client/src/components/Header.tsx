@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faHome } from '@fortawesome/free-solid-svg-icons';
 import styles from './Header.module.css';
@@ -9,6 +9,7 @@ import { openModal } from '../features/modal/modalSlice';
 import { clearError, logoutUser, selectUser } from '../features/auth/authSlice';
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
 
@@ -23,6 +24,8 @@ const Header: React.FC = () => {
     dispatch(logoutUser());
     localStorage.removeItem('user');
     setDropdownVisible(false);
+    navigate('/');
+    dispatch(openModal('login'));
   };
 
   return (
@@ -47,7 +50,11 @@ const Header: React.FC = () => {
                 {user.firstName} {user.lastName}
               </p>
               <p>{user.email}</p>
-              <Link to='/mybooks' className={styles.ddlink}>
+              <Link
+                to='/mybooks'
+                onClick={() => setDropdownVisible(false)}
+                className={styles.ddlink}
+              >
                 Go to my books
               </Link>
               <button className={styles.ddlink} onClick={handleLogout}>
