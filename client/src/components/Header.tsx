@@ -32,7 +32,11 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <h1>Book Finder</h1>
       <div className={styles.nav}>
-        <Link to='/' className={styles['nav-link'] + ' ' + styles['icon-btn']}>
+        <Link
+          to='/'
+          className={styles['nav-link'] + ' ' + styles['icon-btn']}
+          onClick={() => setDropdownVisible(false)}
+        >
           <FontAwesomeIcon icon={faHome} />
         </Link>
         {user && (
