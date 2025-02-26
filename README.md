@@ -46,25 +46,27 @@ To get started with Book Finder, follow these steps:
    git clone https://github.com/cuneytakcay/book-finder.git
    ```
 
-2. Navigate to the project directory:
+2. Set the environment variables [see the .env Files Setup section for details](#env-files-setup)
+
+3. Navigate to the project directory:
 
    ```bash
    cd book-finder
    ```
 
-3. Install the dependencies:
+4. Install the dependencies:
 
    ```bash
    npm install
    ```
 
-4. Start the development app:
+5. Start the development app:
 
    ```bash
    npm start
    ```
 
-5. Open your browser and go to `http://localhost:5173` to view the app.
+6. Open your browser and go to `http://localhost:5173` to view the app.
 
 ## .env Files Setup
 
