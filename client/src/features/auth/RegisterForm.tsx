@@ -5,7 +5,10 @@ import { IRegisterUser } from '../../types/Auth.type';
 import Spinner from '../../components/Spinner';
 import styles from './Form.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExclamationCircle,
+  faQuestionCircle,
+} from '@fortawesome/free-solid-svg-icons';
 
 // Redux toolkit
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -142,7 +145,7 @@ const Register: React.FC = () => {
                 <p className={styles.error}>{errors.email.message}</p>
               )}
             </div>
-            <div className={styles['input-wrapper']}>
+            <div className={styles['input-wrapper'] + ' ' + styles.relative}>
               <label>
                 Password
                 <input
@@ -152,13 +155,17 @@ const Register: React.FC = () => {
                     pattern: {
                       value:
                         /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/,
-                      message: `
-                    Password must contain at least one number and at least one special
-                    character and must be at least 8 characters long
-                  `,
+                      message: `Not a valid password`,
                     },
                   })}
                 />
+                <span className={styles.question}>
+                  <FontAwesomeIcon icon={faQuestionCircle} />
+                  <p className={styles.tooltip}>
+                    Password must contain at least one number and at least one
+                    special character and must be at least 8 characters long
+                  </p>
+                </span>
               </label>
               {errors.password && (
                 <p className={styles.error}>{errors.password.message}</p>
